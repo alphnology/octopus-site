@@ -1,0 +1,2602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Octopus — The AI Platform for Customer Operations. Conecta conversaciones, sistemas y procesos en una sola plataforma empresarial.">
+<meta name="keywords" content="AI, omnichannel, CRM, ERP, automatización, WhatsApp, SAP, Salesforce, enterprise">
+<title>Octopus — The AI Platform for Customer Operations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,sans-serif;background:#F8FAFC;color:#0A1B5E;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  --cyan:#18C8FF;
+  --blue-mid:#1296FF;
+  --blue-elec:#0D6BFF;
+  --navy:#0A1B5E;
+  --dark:#050B2B;
+  --white-soft:#F8FAFC;
+  --slate:#475569;
+  --slate-light:#94A3B8;
+  --border:#E2E8F0;
+  --border-dark:rgba(255,255,255,0.08);
+  --success:#10B981;
+  --grad:linear-gradient(135deg,#18C8FF 0%,#1296FF 45%,#0D6BFF 100%);
+  --grad-text:var(--grad);
+  --shadow-sm:0 1px 3px rgba(10,27,94,.08);
+  --shadow-md:0 4px 24px rgba(10,27,94,.12);
+  --shadow-lg:0 8px 48px rgba(10,27,94,.18);
+  --shadow-glow:0 0 40px rgba(24,200,255,.25);
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:20px;
+  --radius-xl:28px;
+  --transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.font-display{font-family:'Space Grotesk',sans-serif}
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.15;letter-spacing:-.02em}
+h1{font-size:clamp(2.5rem,5vw,4rem)}
+h2{font-size:clamp(2rem,3.5vw,3rem)}
+h3{font-size:clamp(1.25rem,2vw,1.5rem)}
+p{line-height:1.7;color:var(--slate)}
+
+.gradient-text{
+  background:var(--grad-text);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.section{padding:100px 0}
+.section-sm{padding:64px 0}
+
+.section-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(18,150,255,.1);
+  border:1px solid rgba(18,150,255,.25);
+  color:var(--blue-mid);
+  font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 16px;border-radius:100px;
+  margin-bottom:24px;
+}
+.section-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--blue-mid);animation:pulse 2s infinite}
+.flow-section .section-badge .dot,.integrations-section .section-badge .dot,.omni-section .section-badge .dot{background:var(--cyan)}
+
+.section-header{text-align:center;margin-bottom:64px}
+.section-header p{font-size:1.125rem;max-width:600px;margin:16px auto 0}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;border-radius:10px;
+  font-family:'Space Grotesk',sans-serif;font-size:.9375rem;font-weight:600;
+  transition:var(--transition);white-space:nowrap;
+}
+.btn-primary{
+  background:var(--grad);color:#fff;
+  box-shadow:0 4px 20px rgba(13,107,255,.35);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(13,107,255,.45)}
+.btn-secondary{
+  background:rgba(255,255,255,.08);color:#fff;
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(8px);
+}
+.btn-secondary:hover{background:rgba(255,255,255,.15);transform:translateY(-2px)}
+.btn-outline{
+  background:transparent;color:var(--navy);
+  border:1.5px solid var(--border);
+}
+.btn-outline:hover{border-color:var(--blue-mid);color:var(--blue-mid);transform:translateY(-2px)}
+.btn-lg{padding:18px 36px;font-size:1rem}
+.btn-sm{padding:10px 20px;font-size:.875rem}
+
+/* ============================================================
+   ANNOUNCEMENT BAR
+   ============================================================ */
+.announcement-bar{
+  background:var(--grad);
+  color:#fff;text-align:center;
+  padding:10px 24px;
+  font-size:.8125rem;font-weight:500;letter-spacing:.02em;
+  position:relative;z-index:100;
+}
+.announcement-bar a{color:#fff;text-decoration:underline;opacity:.9}
+.announcement-bar a:hover{opacity:1}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar{
+  position:sticky;top:0;z-index:99;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:var(--transition);
+}
+.navbar.scrolled{box-shadow:var(--shadow-md)}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:68px;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.25rem;
+  color:var(--navy);
+}
+.nav-logo img{width:34px;height:34px;object-fit:contain}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{
+  padding:8px 14px;border-radius:8px;
+  font-size:.9rem;font-weight:500;color:var(--slate);
+  transition:var(--transition);
+}
+.nav-links a:hover{color:var(--navy);background:#F1F5F9}
+.nav-actions{display:flex;align-items:center;gap:12px}
+.nav-login{font-size:.9rem;font-weight:500;color:var(--slate);padding:8px 16px;border-radius:8px;transition:var(--transition)}
+.nav-login:hover{color:var(--navy);background:#F1F5F9}
+.nav-cta{padding:10px 22px;font-size:.9rem}
+
+.nav-hamburger{display:none;flex-direction:column;gap:5px;padding:8px;cursor:pointer}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:var(--transition)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  background:var(--dark);
+  position:relative;overflow:hidden;
+  padding:120px 0 80px;
+  min-height:92vh;display:flex;align-items:center;
+}
+.hero-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(24,200,255,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(24,200,255,.06) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 40%,transparent 100%);
+}
+.hero-glow-1{
+  position:absolute;top:-20%;left:20%;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(24,200,255,.18) 0%,transparent 70%);
+  animation:float1 8s ease-in-out infinite;
+}
+.hero-glow-2{
+  position:absolute;bottom:0;right:10%;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(13,107,255,.15) 0%,transparent 70%);
+  animation:float2 10s ease-in-out infinite;
+}
+.hero-glow-3{
+  position:absolute;top:30%;left:-10%;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(18,150,255,.1) 0%,transparent 70%);
+  animation:float3 12s ease-in-out infinite;
+}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-40px)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-25px,30px)}}
+@keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-20px)}}
+
+.hero-content{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+.hero-left{max-width:560px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(24,200,255,.12);
+  border:1px solid rgba(24,200,255,.3);
+  color:var(--cyan);
+  font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:8px 18px;border-radius:100px;
+  margin-bottom:32px;
+}
+.hero-badge .pulse{
+  width:7px;height:7px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 0 0 rgba(24,200,255,.4);
+  animation:heartbeat 2s infinite;
+}
+@keyframes heartbeat{
+  0%{box-shadow:0 0 0 0 rgba(24,200,255,.4)}
+  70%{box-shadow:0 0 0 8px rgba(24,200,255,0)}
+  100%{box-shadow:0 0 0 0 rgba(24,200,255,0)}
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+.hero h1{color:#fff;margin-bottom:24px;line-height:1.1}
+.hero h1 span{display:block}
+.hero-sub{font-size:1.125rem;color:rgba(255,255,255,.65);max-width:480px;line-height:1.75;margin-bottom:40px}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:56px}
+.hero-trust{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.hero-trust-item{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.5);font-size:.8125rem}
+.hero-trust-item svg{color:var(--success)}
+.hero-trust-divider{width:1px;height:16px;background:rgba(255,255,255,.15)}
+
+/* Hero Visual */
+.hero-visual{position:relative;z-index:2}
+.hero-mockup{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;
+  padding:20px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 32px 80px rgba(0,0,0,.5),var(--shadow-glow);
+  position:relative;overflow:hidden;
+}
+.hero-mockup::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(24,200,255,.6),transparent);
+}
+.mockup-header{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.mockup-dot{width:10px;height:10px;border-radius:50%}
+.mockup-dot:nth-child(1){background:#FF5F57}
+.mockup-dot:nth-child(2){background:#FEBC2E}
+.mockup-dot:nth-child(3){background:#28C840}
+.mockup-title{flex:1;text-align:center;color:rgba(255,255,255,.3);font-size:.75rem;font-weight:500}
+
+.mockup-body{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mockup-panel{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:14px;
+}
+.mockup-panel-title{color:rgba(255,255,255,.4);font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.mockup-msg{
+  background:rgba(255,255,255,.07);border-radius:8px;
+  padding:8px 10px;margin-bottom:8px;
+  font-size:.7rem;color:rgba(255,255,255,.7);
+  display:flex;align-items:flex-start;gap:8px;
+}
+.mockup-msg .avatar{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--grad);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.55rem;font-weight:700;color:#fff;
+}
+.mockup-msg.ai-msg .avatar{background:linear-gradient(135deg,#10B981,#059669)}
+.mockup-msg-text{flex:1;line-height:1.5}
+.mockup-stat{
+  background:rgba(24,200,255,.08);border:1px solid rgba(24,200,255,.15);
+  border-radius:8px;padding:10px;margin-bottom:8px;
+}
+.mockup-stat-value{color:var(--cyan);font-size:1.125rem;font-weight:700;font-family:'Space Grotesk',sans-serif}
+.mockup-stat-label{color:rgba(255,255,255,.4);font-size:.65rem;margin-top:2px}
+.mockup-flow-item{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);
+  font-size:.68rem;color:rgba(255,255,255,.6);
+}
+.mockup-flow-item:last-child{border-bottom:none}
+.status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.status-green{background:var(--success);box-shadow:0 0 6px rgba(16,185,129,.5)}
+.status-blue{background:var(--cyan);box-shadow:0 0 6px rgba(24,200,255,.5)}
+.status-yellow{background:#FEBC2E}
+
+.hero-floating-card{
+  position:absolute;
+  background:rgba(10,27,94,.9);
+  border:1px solid rgba(24,200,255,.3);
+  border-radius:12px;padding:12px 16px;
+  backdrop-filter:blur(20px);
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  animation:floatCard 6s ease-in-out infinite;
+}
+.hero-floating-card.card-left{top:30%;left:-60px}
+.hero-floating-card.card-bottom{bottom:-30px;right:30px;animation-delay:-3s}
+.floating-card-label{color:rgba(255,255,255,.5);font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.floating-card-value{color:#fff;font-size:1rem;font-weight:700;font-family:'Space Grotesk',sans-serif}
+.floating-card-sub{color:var(--success);font-size:.7rem;font-weight:500;margin-top:2px}
+
+@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* ============================================================
+   SOCIAL PROOF
+   ============================================================ */
+.social-proof{
+  background:#fff;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:48px 0;
+}
+.social-proof-label{
+  text-align:center;color:var(--slate-light);
+  font-size:.8125rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:40px;
+}
+.logos-grid{
+  display:flex;align-items:center;justify-content:center;
+  gap:48px;flex-wrap:wrap;
+}
+.logo-item{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:.45;transition:var(--transition);
+  filter:grayscale(1);
+}
+.logo-item:hover{opacity:.8;filter:grayscale(0)}
+.logo-icon{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.875rem;color:#fff;
+  font-family:'Space Grotesk',sans-serif;
+}
+.logo-name{font-size:.75rem;font-weight:600;color:var(--slate);letter-spacing:.03em}
+
+/* ============================================================
+   WHY OCTOPUS
+   ============================================================ */
+.why-section{background:var(--white-soft)}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.why-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:32px;transition:var(--transition);position:relative;overflow:hidden;
+}
+.why-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--grad);opacity:0;transition:var(--transition);
+}
+.why-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:transparent}
+.why-card:hover::before{opacity:1}
+.why-icon{
+  width:52px;height:52px;border-radius:14px;
+  background:linear-gradient(135deg,rgba(24,200,255,.12),rgba(13,107,255,.08));
+  border:1px solid rgba(18,150,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;font-size:1.5rem;
+}
+.why-card h3{font-size:1.125rem;color:var(--navy);margin-bottom:10px}
+.why-card p{font-size:.9rem;line-height:1.65}
+
+/* ============================================================
+   FLOW SECTION — CONVERSATIONS → ACTIONS
+   ============================================================ */
+.flow-section{background:var(--dark);padding:100px 0;position:relative;overflow:hidden}
+.flow-section::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(24,200,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(24,200,255,.04) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.flow-section .section-badge{background:rgba(24,200,255,.1);border-color:rgba(24,200,255,.25);color:var(--cyan)}
+.flow-section .section-header h2{color:#fff}
+.flow-section .section-header p{color:rgba(255,255,255,.55)}
+
+.flow-visual{
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:0;position:relative;z-index:2;margin-top:64px;
+}
+.flow-node{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:20px 24px;
+  min-width:140px;text-align:center;
+  transition:var(--transition);position:relative;
+}
+.flow-node:hover{
+  background:rgba(24,200,255,.08);border-color:rgba(24,200,255,.35);
+  transform:translateY(-4px);box-shadow:0 16px 40px rgba(24,200,255,.15);
+}
+.flow-node.central{
+  background:var(--grad);border-color:transparent;
+  padding:28px 32px;min-width:160px;
+  box-shadow:0 0 60px rgba(18,150,255,.4);
+}
+.flow-node.central .flow-icon{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3)}
+.flow-node.central .flow-label{color:#fff;font-size:1rem;font-weight:700}
+.flow-node.central .flow-sub{color:rgba(255,255,255,.75)}
+.flow-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:rgba(24,200,255,.12);border:1px solid rgba(24,200,255,.25);
+  display:flex;align-items:center;justify-content:center;font-size:1.375rem;
+}
+.flow-label{color:#fff;font-size:.875rem;font-weight:600;font-family:'Space Grotesk',sans-serif}
+.flow-sub{color:rgba(255,255,255,.4);font-size:.72rem;margin-top:2px}
+
+.flow-arrow{
+  display:flex;align-items:center;padding:0 8px;
+  color:rgba(24,200,255,.5);font-size:1.25rem;
+  position:relative;
+}
+.flow-arrow::after{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:30px;height:1px;background:linear-gradient(90deg,transparent,rgba(24,200,255,.6),transparent);
+  animation:flowPulse 2s ease-in-out infinite;
+}
+@keyframes flowPulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+.flow-steps{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  margin-top:64px;position:relative;z-index:2;
+}
+.flow-step{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;padding:24px;position:relative;overflow:hidden;
+}
+.flow-step-num{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--grad);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8125rem;font-weight:700;color:#fff;
+  margin-bottom:14px;font-family:'Space Grotesk',sans-serif;
+}
+.flow-step h4{color:#fff;font-size:.9375rem;margin-bottom:8px;font-family:'Space Grotesk',sans-serif;font-weight:600}
+.flow-step p{color:rgba(255,255,255,.45);font-size:.8125rem;line-height:1.6}
+
+/* ============================================================
+   CONNECT YOUR BUSINESS — UNIQUE SECTION
+   ============================================================ */
+.connect-section{background:#fff;padding:100px 0;overflow:hidden}
+.connect-flow{
+  margin-top:64px;position:relative;
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;
+}
+.connect-node{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  padding:20px 16px;min-width:120px;text-align:center;
+  background:var(--white-soft);border:1.5px solid var(--border);
+  border-radius:16px;transition:var(--transition);position:relative;
+}
+.connect-node:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:rgba(18,150,255,.3)}
+.connect-node.hub{
+  background:var(--dark);border-color:transparent;
+  padding:28px 24px;min-width:140px;
+  box-shadow:0 0 60px rgba(18,150,255,.25);
+}
+.connect-node.hub img{width:42px;height:42px;object-fit:contain}
+.connect-node.hub .cn-label{color:#fff;font-weight:700;font-size:1rem}
+.connect-node.hub .cn-sub{color:rgba(255,255,255,.5);font-size:.72rem}
+.cn-icon{font-size:1.75rem;line-height:1}
+.cn-label{font-size:.8125rem;font-weight:600;color:var(--navy);font-family:'Space Grotesk',sans-serif}
+.cn-sub{font-size:.7rem;color:var(--slate-light)}
+
+.connect-arrow{
+  padding:0 4px;color:var(--slate-light);font-size:1.125rem;
+  display:flex;align-items:center;
+}
+.connect-arrow svg{opacity:.5}
+
+.connect-desc{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  margin-top:64px;padding-top:48px;border-top:1px solid var(--border);
+}
+.connect-desc-item{text-align:center}
+.connect-desc-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(24,200,255,.1),rgba(13,107,255,.06));
+  border:1px solid rgba(18,150,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.25rem;margin:0 auto 14px;
+}
+.connect-desc-item h4{color:var(--navy);font-size:.9375rem;margin-bottom:6px;font-family:'Space Grotesk',sans-serif;font-weight:600}
+.connect-desc-item p{font-size:.8125rem;line-height:1.65}
+
+/* ============================================================
+   CHANNELS
+   ============================================================ */
+.channels-section{background:var(--white-soft)}
+.channels-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.channel-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:28px 20px;text-align:center;transition:var(--transition);
+}
+.channel-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:rgba(18,150,255,.25)}
+.channel-icon{font-size:2.5rem;margin-bottom:14px;line-height:1}
+.channel-card h4{font-size:.9375rem;color:var(--navy);margin-bottom:6px}
+.channel-card p{font-size:.8rem;color:var(--slate-light)}
+.channel-badge{
+  display:inline-block;margin-top:10px;
+  background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);
+  color:var(--success);font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 10px;border-radius:100px;
+}
+
+/* ============================================================
+   INTEGRATIONS ARCHITECTURE
+   ============================================================ */
+.integrations-section{background:var(--dark);padding:100px 0;position:relative;overflow:hidden}
+.integrations-section .section-header h2{color:#fff}
+.integrations-section .section-header p{color:rgba(255,255,255,.55)}
+.integrations-section .section-badge{background:rgba(24,200,255,.1);border-color:rgba(24,200,255,.25);color:var(--cyan)}
+
+.arch-visual{
+  margin-top:64px;position:relative;display:flex;
+  flex-direction:column;align-items:center;gap:32px;
+}
+.arch-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.arch-node{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:12px 18px;
+  transition:var(--transition);
+}
+.arch-node:hover{background:rgba(24,200,255,.08);border-color:rgba(24,200,255,.3);transform:translateY(-3px)}
+.arch-node-icon{font-size:1.25rem}
+.arch-node-text{color:rgba(255,255,255,.8);font-size:.85rem;font-weight:600;font-family:'Space Grotesk',sans-serif}
+
+.arch-center{
+  background:var(--grad);
+  border-radius:20px;padding:32px 48px;text-align:center;
+  box-shadow:0 0 80px rgba(18,150,255,.35);position:relative;
+}
+.arch-center::before{
+  content:'';position:absolute;inset:-1px;border-radius:21px;
+  background:var(--grad);z-index:-1;filter:blur(20px);opacity:.5;
+}
+.arch-center img{width:52px;height:52px;object-fit:contain;margin:0 auto 10px}
+.arch-center-title{color:#fff;font-size:1.375rem;font-weight:700;font-family:'Space Grotesk',sans-serif}
+.arch-center-sub{color:rgba(255,255,255,.75);font-size:.8125rem;margin-top:4px}
+
+.arch-connector{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  color:rgba(24,200,255,.5);font-size:.7rem;
+}
+.arch-connector-line{
+  width:2px;height:32px;
+  background:linear-gradient(to bottom,rgba(24,200,255,.5),rgba(24,200,255,.1));
+  border-radius:2px;
+}
+
+/* ============================================================
+   OMNICHANNEL PLATFORM
+   ============================================================ */
+.omni-section{background:var(--dark);padding:100px 0;position:relative;overflow:hidden}
+.omni-section::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(24,200,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(24,200,255,.04) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.omni-section .section-header h2{color:#fff}
+.omni-section .section-header p{color:rgba(255,255,255,.55)}
+.omni-section .section-badge{background:rgba(24,200,255,.1);border-color:rgba(24,200,255,.25);color:var(--cyan)}
+.omni-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;align-items:center;margin-top:64px;position:relative;z-index:2}
+
+.omni-channels{display:flex;flex-direction:column;gap:0}
+.channel-source{
+  display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:12px 16px;margin-bottom:8px;
+  transition:var(--transition);
+}
+.channel-source:hover{background:rgba(24,200,255,.08);border-color:rgba(24,200,255,.3);transform:translateX(6px)}
+.channel-source-icon{font-size:1.25rem;width:30px;text-align:center;flex-shrink:0}
+.channel-source-info{flex:1}
+.channel-source-name{color:#fff;font-size:.85rem;font-weight:600;font-family:'Space Grotesk',sans-serif}
+.channel-source-vol{font-size:.7rem;color:rgba(255,255,255,.35);margin-top:2px}
+.channel-live-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--success);
+  box-shadow:0 0 8px rgba(16,185,129,.6);flex-shrink:0;
+  animation:livePulse 2s ease-in-out infinite;
+}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
+.omni-funnel-arrow{
+  text-align:center;color:rgba(24,200,255,.4);font-size:.72rem;
+  font-weight:600;letter-spacing:.05em;padding:4px 0;
+}
+.omni-funnel-label{
+  margin-top:12px;
+  background:var(--grad);border-radius:14px;padding:16px;
+  color:#fff;font-weight:700;font-family:'Space Grotesk',sans-serif;
+  font-size:.9375rem;text-align:center;
+  box-shadow:0 12px 40px rgba(13,107,255,.35);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+
+.omni-inbox-mockup{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;overflow:hidden;
+  box-shadow:0 32px 80px rgba(0,0,0,.5),var(--shadow-glow);
+  position:relative;
+}
+.omni-inbox-mockup::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(24,200,255,.6),transparent);
+}
+.inbox-topbar{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 16px;background:rgba(255,255,255,.04);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.inbox-topbar-dots{display:flex;gap:6px}
+.inbox-topbar-dot{width:9px;height:9px;border-radius:50%}
+.inbox-topbar-title{flex:1;text-align:center;color:rgba(255,255,255,.3);font-size:.72rem;font-weight:500}
+.inbox-body{display:grid;grid-template-columns:1fr 1.4fr;min-height:340px}
+.inbox-list{border-right:1px solid rgba(255,255,255,.06);padding:10px}
+.inbox-item{
+  padding:10px;border-radius:9px;margin-bottom:6px;cursor:pointer;transition:var(--transition);
+}
+.inbox-item.active{background:rgba(24,200,255,.1);border:1px solid rgba(24,200,255,.2)}
+.inbox-item:not(.active){background:rgba(255,255,255,.03)}
+.inbox-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
+.inbox-item-name{color:#fff;font-size:.72rem;font-weight:600}
+.inbox-item-time{color:rgba(255,255,255,.3);font-size:.6rem}
+.inbox-item-preview{color:rgba(255,255,255,.4);font-size:.65rem;line-height:1.4}
+.inbox-item-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:.58rem;font-weight:700;padding:2px 8px;border-radius:100px;margin-top:5px;
+}
+.badge-bot{background:rgba(16,185,129,.15);color:#10B981}
+.badge-ai{background:rgba(24,200,255,.15);color:var(--cyan)}
+.badge-human{background:rgba(255,152,0,.18);color:#FF9800}
+
+.inbox-chat{padding:12px;display:flex;flex-direction:column;gap:7px}
+.inbox-chat-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:2px;
+}
+.inbox-chat-name{color:#fff;font-size:.78rem;font-weight:600}
+.inbox-chat-agent-tag{
+  font-size:.62rem;padding:3px 9px;border-radius:100px;font-weight:700;
+}
+.tag-ai{background:rgba(24,200,255,.15);color:var(--cyan)}
+.tag-human{background:rgba(255,152,0,.18);color:#FF9800}
+.tag-bot{background:rgba(16,185,129,.15);color:#10B981}
+
+.chat-bubble{max-width:88%}
+.chat-bubble.incoming{align-self:flex-start}
+.chat-bubble.outgoing{align-self:flex-end}
+.chat-bubble-sender{font-size:.58rem;color:rgba(255,255,255,.3);margin-bottom:3px;padding:0 4px}
+.chat-bubble-text{
+  padding:7px 10px;border-radius:9px;font-size:.66rem;line-height:1.55;
+}
+.incoming .chat-bubble-text{background:rgba(255,255,255,.08);color:rgba(255,255,255,.85)}
+.outgoing-bot .chat-bubble-text{background:rgba(16,185,129,.18);color:rgba(255,255,255,.9)}
+.outgoing-ai .chat-bubble-text{background:rgba(24,200,255,.18);color:rgba(255,255,255,.9)}
+.outgoing-human .chat-bubble-text{background:rgba(255,152,0,.18);color:rgba(255,255,255,.9)}
+
+.escalation-notice{
+  background:rgba(255,152,0,.08);border:1px dashed rgba(255,152,0,.3);
+  border-radius:8px;padding:7px 10px;text-align:center;
+  font-size:.63rem;color:rgba(255,152,0,.9);font-weight:500;
+}
+
+/* ============================================================
+   THREE PILLARS
+   ============================================================ */
+.three-pillars-section{background:#fff}
+.pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px}
+
+.pillar-card{
+  border-radius:var(--radius-lg);padding:36px 28px;
+  border:1.5px solid var(--border);transition:var(--transition);
+  position:relative;overflow:hidden;
+}
+.pillar-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.pillar-card.bot-card{background:linear-gradient(160deg,#F0FDF9,#ECFDF5);border-color:rgba(16,185,129,.25)}
+.pillar-card.ai-card{background:var(--dark);border-color:rgba(24,200,255,.25)}
+.pillar-card.human-card{background:var(--white-soft);border-color:var(--border)}
+
+.pillar-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 12px;border-radius:100px;margin-bottom:20px;
+}
+.bot-tag{background:rgba(16,185,129,.15);color:#059669}
+.ai-tag{background:rgba(24,200,255,.15);color:var(--cyan)}
+.human-tag{background:rgba(10,27,94,.08);color:var(--navy)}
+
+.pillar-icon{font-size:2.5rem;margin-bottom:16px;display:block}
+.pillar-card h3{font-size:1.125rem;margin-bottom:6px}
+.bot-card h3{color:#065F46}
+.ai-card h3{color:#fff}
+.human-card h3{color:var(--navy)}
+.pillar-desc{font-size:.82rem;margin-bottom:18px;line-height:1.6}
+.bot-card .pillar-desc{color:#047857}
+.ai-card .pillar-desc{color:rgba(255,255,255,.5)}
+.human-card .pillar-desc{color:var(--slate-light)}
+
+.pillar-list{display:flex;flex-direction:column;gap:9px}
+.pillar-item{display:flex;align-items:center;gap:10px;font-size:.84rem}
+.bot-card .pillar-item{color:#047857}
+.ai-card .pillar-item{color:rgba(255,255,255,.7)}
+.human-card .pillar-item{color:var(--slate)}
+.pillar-bullet{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.bot-bullet{background:#10B981}
+.ai-bullet{background:var(--cyan)}
+.human-bullet{background:var(--blue-mid)}
+
+/* Escalation Strip */
+.escalation-strip{
+  margin-top:36px;
+  background:linear-gradient(135deg,var(--dark),#0A1B5E);
+  border-radius:var(--radius-lg);padding:28px 40px;
+  border:1px solid rgba(24,200,255,.15);position:relative;overflow:hidden;
+}
+.escalation-strip::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(24,200,255,.5),transparent);
+}
+.escalation-title{
+  text-align:center;color:rgba(255,255,255,.5);font-size:.72rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px;
+}
+.escalation-flow{
+  display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;
+}
+.esc-node{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:16px 24px;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);border-radius:14px;
+  min-width:130px;text-align:center;
+}
+.esc-node.active-node{border-color:rgba(24,200,255,.3);background:rgba(24,200,255,.07)}
+.esc-icon{font-size:1.75rem}
+.esc-label{color:#fff;font-size:.8rem;font-weight:700;font-family:'Space Grotesk',sans-serif}
+.esc-sub{color:rgba(255,255,255,.35);font-size:.68rem}
+.esc-arrow-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:0 12px;
+}
+.esc-arrow-icon{
+  color:rgba(24,200,255,.6);font-size:1.125rem;
+  animation:slideRight 1.8s ease-in-out infinite;
+}
+@keyframes slideRight{0%,100%{opacity:.4;transform:translateX(-3px)}50%{opacity:1;transform:translateX(3px)}}
+.esc-trigger{
+  font-size:.6rem;color:rgba(255,255,255,.3);
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:100px;padding:2px 9px;white-space:nowrap;
+}
+
+.result-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;
+  margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.07);
+}
+.result-item h4{color:var(--navy);font-size:1.375rem;font-weight:700;font-family:'Space Grotesk',sans-serif;margin-bottom:4px}
+.result-item p{font-size:.82rem;color:var(--slate)}
+
+/* ============================================================
+   USE CASES
+   ============================================================ */
+.usecases-section{background:var(--white-soft)}
+.usecases-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.usecase-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:24px 18px;text-align:center;transition:var(--transition);
+  cursor:pointer;
+}
+.usecase-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:rgba(18,150,255,.25);background:linear-gradient(135deg,rgba(24,200,255,.04),rgba(13,107,255,.04))}
+.usecase-icon{font-size:2rem;margin-bottom:12px}
+.usecase-card h4{font-size:.875rem;color:var(--navy);font-weight:600}
+
+/* ============================================================
+   METRICS
+   ============================================================ */
+.metrics-section{
+  background:var(--grad);padding:80px 0;position:relative;overflow:hidden;
+}
+.metrics-section::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;position:relative;z-index:2}
+.metric-item{text-align:center}
+.metric-value{
+  font-size:clamp(3rem,5vw,4.5rem);font-weight:800;color:#fff;
+  font-family:'Space Grotesk',sans-serif;line-height:1;margin-bottom:8px;
+}
+.metric-suffix{font-size:2.5rem;display:inline}
+.metric-label{color:rgba(255,255,255,.75);font-size:.9375rem;font-weight:500}
+
+/* ============================================================
+   PRODUCTS
+   ============================================================ */
+.products-section{background:#fff}
+.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.product-card{
+  background:var(--white-soft);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:28px;
+  transition:var(--transition);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.product-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:var(--grad);opacity:0;transition:var(--transition);
+}
+.product-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(18,150,255,.2)}
+.product-card:hover::after{opacity:1}
+.product-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(24,200,255,.15),rgba(13,107,255,.08));
+  border:1px solid rgba(18,150,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.375rem;margin-bottom:16px;
+}
+.product-card h3{font-size:1rem;color:var(--navy);margin-bottom:8px}
+.product-card p{font-size:.8125rem;color:var(--slate);line-height:1.65;flex:1}
+.product-link{
+  margin-top:16px;color:var(--blue-mid);font-size:.8125rem;font-weight:600;
+  display:flex;align-items:center;gap:6px;transition:var(--transition);
+}
+.product-link:hover{gap:10px;color:var(--blue-elec)}
+
+/* ============================================================
+   SECURITY
+   ============================================================ */
+.security-section{background:var(--white-soft)}
+.security-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.security-badges{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.security-badge{
+  display:flex;align-items:center;gap:8px;
+  background:#fff;border:1px solid var(--border);border-radius:10px;
+  padding:10px 16px;font-size:.8125rem;font-weight:600;color:var(--navy);
+  transition:var(--transition);
+}
+.security-badge:hover{border-color:rgba(18,150,255,.3);box-shadow:var(--shadow-sm)}
+.security-badge-icon{font-size:1rem}
+.security-list{display:flex;flex-direction:column;gap:16px}
+.security-item{
+  display:flex;align-items:flex-start;gap:16px;
+  padding:20px;background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-md);transition:var(--transition);
+}
+.security-item:hover{box-shadow:var(--shadow-sm);border-color:rgba(18,150,255,.2)}
+.security-item-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:linear-gradient(135deg,rgba(24,200,255,.1),rgba(13,107,255,.06));
+  display:flex;align-items:center;justify-content:center;font-size:1.125rem;flex-shrink:0;
+}
+.security-item-text h4{color:var(--navy);font-size:.9375rem;margin-bottom:4px}
+.security-item-text p{font-size:.8125rem}
+
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+.testimonials-section{background:#fff}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.testimonial-card{
+  background:var(--white-soft);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:32px;transition:var(--transition);
+}
+.testimonial-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.testimonial-stars{display:flex;gap:4px;margin-bottom:20px;color:#FEBC2E;font-size:1rem}
+.testimonial-quote{
+  font-size:.9375rem;color:var(--slate);line-height:1.75;
+  margin-bottom:24px;font-style:italic;
+}
+.testimonial-author{display:flex;align-items:center;gap:12px}
+.author-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--grad);display:flex;align-items:center;justify-content:center;
+  font-size:.9375rem;font-weight:700;color:#fff;font-family:'Space Grotesk',sans-serif;
+  flex-shrink:0;
+}
+.author-name{font-weight:600;color:var(--navy);font-size:.9rem}
+.author-title{font-size:.8rem;color:var(--slate-light)}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq-section{background:var(--white-soft)}
+.faq-container{max-width:760px;margin:0 auto;margin-top:64px}
+.faq-item{
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-md);margin-bottom:12px;overflow:hidden;
+  transition:var(--transition);
+}
+.faq-item:hover{border-color:rgba(18,150,255,.25)}
+.faq-item.open{border-color:rgba(18,150,255,.3);box-shadow:var(--shadow-sm)}
+.faq-question{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 24px;cursor:pointer;
+  font-weight:600;color:var(--navy);font-size:.9375rem;
+  font-family:'Space Grotesk',sans-serif;
+  transition:var(--transition);user-select:none;
+  width:100%;text-align:left;background:none;border:none;
+}
+.faq-question:hover{color:var(--blue-mid)}
+.faq-icon{
+  width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:var(--transition);font-size:1rem;color:var(--slate);
+}
+.faq-item.open .faq-icon{background:var(--grad);border-color:transparent;color:#fff;transform:rotate(45deg)}
+.faq-answer{
+  max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease;
+  padding:0 24px;
+}
+.faq-answer-inner{padding-bottom:20px;font-size:.9rem;line-height:1.75;border-top:1px solid var(--border);padding-top:16px}
+
+/* ============================================================
+   CTA FINAL
+   ============================================================ */
+.cta-final{
+  background:var(--dark);padding:120px 0;position:relative;overflow:hidden;text-align:center;
+}
+.cta-final::before{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:800px;height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(18,150,255,.15) 0%,transparent 65%);
+}
+.cta-final-content{position:relative;z-index:2}
+.cta-final h2{color:#fff;margin-bottom:20px;font-size:clamp(2rem,4vw,3.25rem)}
+.cta-final p{color:rgba(255,255,255,.6);font-size:1.125rem;max-width:520px;margin:0 auto 40px}
+.cta-actions{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.cta-trust{margin-top:40px;display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.cta-trust-item{color:rgba(255,255,255,.4);font-size:.8125rem;display:flex;align-items:center;gap:6px}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{background:#020817;padding:80px 0 32px;border-top:1px solid rgba(255,255,255,.06)}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:48px;margin-bottom:64px}
+.footer-brand{}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.footer-logo img{width:32px;height:32px;object-fit:contain}
+.footer-logo-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.125rem;color:#fff}
+.footer-tagline{color:rgba(255,255,255,.35);font-size:.8125rem;line-height:1.7;max-width:240px}
+.footer-social{display:flex;gap:12px;margin-top:20px}
+.social-btn{
+  width:36px;height:36px;border-radius:9px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.5);font-size:.9rem;transition:var(--transition);
+}
+.social-btn:hover{background:rgba(24,200,255,.15);border-color:rgba(24,200,255,.3);color:var(--cyan)}
+
+.footer-col h5{
+  color:#fff;font-size:.875rem;font-weight:600;
+  font-family:'Space Grotesk',sans-serif;margin-bottom:20px;
+}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{
+  color:rgba(255,255,255,.4);font-size:.8125rem;transition:var(--transition);
+}
+.footer-links a:hover{color:var(--cyan)}
+
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+  padding-top:32px;border-top:1px solid rgba(255,255,255,.06);
+}
+.footer-copyright{color:rgba(255,255,255,.3);font-size:.8rem}
+.footer-legal{display:flex;gap:24px}
+.footer-legal a{color:rgba(255,255,255,.3);font-size:.8rem;transition:var(--transition)}
+.footer-legal a:hover{color:rgba(255,255,255,.6)}
+
+/* ============================================================
+   ANIMATIONS & REVEAL
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1100px){
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  .usecases-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr 1fr}
+}
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;gap:48px}
+  .hero{min-height:auto;padding:100px 0 64px}
+  .hero-visual{order:-1}
+  .hero-floating-card{display:none}
+  .pillars-grid{grid-template-columns:1fr 1fr}
+  .omni-grid{grid-template-columns:1fr}
+  .flow-steps{grid-template-columns:repeat(2,1fr)}
+  .channels-grid{grid-template-columns:repeat(2,1fr)}
+  .testimonials-grid{grid-template-columns:1fr 1fr}
+  .security-grid{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .nav-links,.nav-login{display:none}
+  .nav-hamburger{display:flex}
+  .section,.flow-section,.integrations-section,.cta-final,.connect-section{padding:72px 0}
+  .metrics-grid{grid-template-columns:repeat(2,1fr);gap:40px}
+  .usecases-grid{grid-template-columns:repeat(2,1fr)}
+  .testimonials-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .pillars-grid{grid-template-columns:1fr}
+  .result-strip{grid-template-columns:1fr}
+  .flow-steps{grid-template-columns:1fr}
+  .connect-desc{grid-template-columns:1fr}
+  .logos-grid{gap:24px}
+  .why-grid{grid-template-columns:1fr}
+  .hero h1{font-size:2.25rem}
+}
+
+/* ============================================================
+   FLOW BRANCH VISUAL — DIFERENCIADOR CENTRAL
+   ============================================================ */
+.flow-branch-visual{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;position:relative;z-index:2;margin-top:64px}
+.fbv-fork{display:flex;flex-direction:column;gap:20px;margin:0 6px}
+.fbv-branch{display:flex;align-items:center;gap:8px}
+.fbv-branch-arrow{font-size:1.5rem;color:rgba(24,200,255,.55);line-height:1;flex-shrink:0;animation:flowPulse 2s ease-in-out infinite}
+
+/* ============================================================
+   CONNECT HUB FLOW — EXCLUSIVO DE OCTOPUS
+   ============================================================ */
+.connect-hub-flow{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:64px;flex-wrap:wrap}
+.chf-col{display:flex;flex-direction:column;gap:10px}
+.chf-col-title{text-align:center;color:var(--slate-light);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.chf-arrow-h{color:rgba(18,150,255,.45);font-size:1.75rem;flex-shrink:0;display:flex;align-items:center;padding:0 4px;animation:flowPulse 2s ease-in-out infinite}
+
+/* ============================================================
+   INDEPENDENCE CALLOUT — LO MEJOR DE TRES MUNDOS
+   ============================================================ */
+.independence-callout{margin-bottom:28px;background:linear-gradient(135deg,rgba(24,200,255,.07),rgba(13,107,255,.04));border:1.5px solid rgba(18,150,255,.2);border-radius:var(--radius-lg);padding:22px 28px}
+.independence-callout-inner{display:flex;align-items:flex-start;gap:16px}
+.ic-icon{font-size:1.5rem;flex-shrink:0;margin-top:1px}
+.ic-body h4{color:var(--navy);font-size:1rem;margin-bottom:6px;font-family:'Space Grotesk',sans-serif;font-weight:700}
+.ic-body p{font-size:.875rem;color:var(--slate);line-height:1.65;margin-bottom:12px}
+.ic-tags{display:flex;flex-wrap:wrap;gap:8px}
+.ic-tag{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:100px;font-size:.75rem;font-weight:600;border:1px solid transparent}
+.ic-tag-bot{background:rgba(16,185,129,.1);color:#059669;border-color:rgba(16,185,129,.2)}
+.ic-tag-ai{background:rgba(24,200,255,.1);color:var(--blue-mid);border-color:rgba(24,200,255,.2)}
+.ic-tag-human{background:rgba(10,27,94,.06);color:var(--navy);border-color:rgba(10,27,94,.15)}
+.ic-tag-all{background:var(--grad);color:#fff;border:none}
+
+/* ============================================================
+   CONTACT SECTION
+   ============================================================ */
+.contact-section{background:#fff}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;align-items:start;margin-top:64px}
+.contact-info-list{display:flex;flex-direction:column;gap:16px;margin-top:28px}
+.contact-info-item{display:flex;align-items:center;gap:14px}
+.contact-info-icon{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,rgba(24,200,255,.12),rgba(13,107,255,.08));border:1px solid rgba(18,150,255,.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.contact-info-text h5{color:var(--navy);font-size:.875rem;font-weight:600;margin-bottom:2px;font-family:'Space Grotesk',sans-serif}
+.contact-info-text p{font-size:.825rem;color:var(--slate)}
+.contact-form-box{background:var(--white-soft);border:1px solid var(--border);border-radius:var(--radius-xl);padding:36px}
+.cform-group{margin-bottom:18px}
+.cform-label{display:block;font-size:.875rem;font-weight:600;color:var(--navy);margin-bottom:7px;font-family:'Space Grotesk',sans-serif}
+.cform-input{width:100%;padding:12px 15px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.9rem;font-family:inherit;color:var(--navy);background:#fff;transition:var(--transition);outline:none}
+.cform-input:focus{border-color:var(--blue-mid);box-shadow:0 0 0 3px rgba(18,150,255,.1)}
+.cform-input::placeholder{color:var(--slate-light)}
+textarea.cform-input{resize:vertical;min-height:110px;line-height:1.6}
+.cform-btn{width:100%;padding:14px 28px;background:var(--grad);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Space Grotesk',sans-serif;font-size:.9375rem;font-weight:600;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:10px}
+.cform-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(13,107,255,.35)}
+.cform-btn:disabled{opacity:.65;cursor:not-allowed;transform:none}
+.cform-status{margin-top:14px;padding:12px 16px;border-radius:var(--radius-sm);font-size:.875rem;text-align:center;display:none}
+.cform-status.success{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:#059669;display:block}
+.cform-status.error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#DC2626;display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cform-spin{animation:spin 1s linear infinite;display:inline-block}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+
+/* ============================================================
+   META BRAND — LOGO PLACEHOLDERS & PARTNER BADGE
+   ============================================================ */
+.meta-logo-ph{
+  display:inline-flex;align-items:center;justify-content:center;
+  flex-shrink:0;overflow:hidden;
+}
+.meta-logo-ph img{display:block;object-fit:contain}
+
+/* Security badge variant for Meta */
+.security-badge-meta{
+  background:linear-gradient(135deg,rgba(0,129,251,.08),rgba(0,178,255,.06));
+  border-color:rgba(0,129,251,.3);
+  color:#0055CC;
+}
+.security-badge-meta .meta-logo-ph{background:linear-gradient(135deg,#0081FB,#00B2FF);padding:3px}
+
+/* Meta Partner strip — sobre fondo oscuro (integrations-section) */
+.meta-partner-strip{
+  margin-top:56px;
+  background:linear-gradient(135deg,rgba(0,129,251,.2),rgba(0,178,255,.12));
+  border:1.5px solid rgba(0,178,255,.4);
+  border-radius:var(--radius-xl);
+  padding:28px 36px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:24px;
+  position:relative;z-index:2;
+  box-shadow:0 0 48px rgba(0,129,251,.15);
+}
+.meta-partner-strip::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,178,255,.7),transparent);
+  border-radius:var(--radius-xl) var(--radius-xl) 0 0;
+}
+.mps-left{display:flex;align-items:center;gap:18px;flex:1;min-width:260px}
+.mps-logo{
+  width:56px;height:56px;border-radius:14px;
+  background:linear-gradient(135deg,#0081FB,#00B2FF);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;box-shadow:0 4px 20px rgba(0,129,251,.5);
+}
+.mps-logo img{width:34px;height:34px;object-fit:contain}
+.mps-text h4{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#fff;font-size:1rem;margin-bottom:6px}
+.mps-text p{font-size:.8rem;color:rgba(255,255,255,.65);line-height:1.6}
+.mps-verified{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(16,185,129,.2);border:1px solid rgba(52,211,153,.4);
+  color:#34D399;font-size:.7rem;font-weight:700;
+  padding:4px 12px;border-radius:100px;margin-top:8px;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.mps-platforms{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.mps-platform{
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  padding:12px 18px;border-radius:var(--radius-md);
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);
+  font-size:.72rem;font-weight:600;color:rgba(255,255,255,.8);
+  transition:var(--transition);min-width:80px;text-align:center;
+}
+.mps-platform:hover{background:rgba(255,255,255,.12);border-color:rgba(0,178,255,.45);transform:translateY(-2px);color:#fff}
+.mps-platform-logo{
+  width:40px;height:40px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.mps-platform-logo img{object-fit:contain}
+
+@media(max-width:700px){
+  .meta-partner-strip{padding:20px}
+  .mps-left{gap:12px}
+  .mps-logo{width:44px;height:44px;border-radius:11px}
+  .mps-logo img{width:26px;height:26px}
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement-bar">
+  🚀 Octopus AI Platform — Ahora con Voice AI y Automation Engine. <a href="#productos">Conoce las novedades →</a>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <img src="logo.png" alt="Octopus Logo">
+        <span>OCTOPUS</span>
+      </a>
+      <div class="nav-links">
+        <a href="#productos">Productos</a>
+        <a href="#soluciones">Soluciones</a>
+        <a href="#integraciones">Integraciones</a>
+        <a href="#casos">Casos de Uso</a>
+        <a href="#faq">Recursos</a>
+        <a href="#empresa">Empresa</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="nav-actions">
+        <a href="#" class="nav-login">Iniciar Sesión</a>
+        <a href="#demo" class="btn btn-primary btn-sm nav-cta">Solicitar Demo</a>
+      </div>
+      <div class="nav-hamburger" onclick="toggleMenu()" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
+    <div class="hero-glow-3"></div>
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="pulse"></span>
+          Powered by AI
+        </div>
+        <h1>
+          <span>Conecta conversaciones,</span>
+          <span class="gradient-text">sistemas y procesos</span>
+          <span>en una sola plataforma.</span>
+        </h1>
+        <p class="hero-sub">Octopus unifica canales digitales, inteligencia artificial y aplicaciones empresariales para automatizar operaciones y mejorar la experiencia del cliente.</p>
+        <div class="hero-actions">
+          <a href="#demo" class="btn btn-primary btn-lg">Solicitar Demo</a>
+          <a href="#plataforma" class="btn btn-secondary btn-lg">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z"/></svg>
+            Ver Plataforma
+          </a>
+        </div>
+        <div class="hero-trust">
+          <div class="hero-trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L15.09 8.26L23 9.27L17.5 14.14L18.18 22L12 18.77L5.82 22L6.5 14.14L1 9.27L8.91 8.26L12 1Z"/></svg>
+            Enterprise Ready
+          </div>
+          <div class="hero-trust-divider"></div>
+          <div class="hero-trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L15.09 8.26L23 9.27L17.5 14.14L18.18 22L12 18.77L5.82 22L6.5 14.14L1 9.27L8.91 8.26L12 1Z"/></svg>
+            Sin código requerido
+          </div>
+          <div class="hero-trust-divider"></div>
+          <div class="hero-trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L15.09 8.26L23 9.27L17.5 14.14L18.18 22L12 18.77L5.82 22L6.5 14.14L1 9.27L8.91 8.26L12 1Z"/></svg>
+            Implementación en días
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div style="position:relative">
+          <div class="hero-mockup">
+            <div class="mockup-header">
+              <div class="mockup-dot"></div>
+              <div class="mockup-dot"></div>
+              <div class="mockup-dot"></div>
+              <div class="mockup-title">Octopus Platform — Workspace</div>
+            </div>
+            <div class="mockup-body">
+              <div class="mockup-panel">
+                <div class="mockup-panel-title">💬 Conversaciones activas</div>
+                <div class="mockup-msg">
+                  <div class="avatar">C</div>
+                  <div class="mockup-msg-text">Necesito una cotización para 200 unidades del producto XL</div>
+                </div>
+                <div class="mockup-msg ai-msg">
+                  <div class="avatar">AI</div>
+                  <div class="mockup-msg-text">Consultando inventario en SAP… Cotización generada ✓</div>
+                </div>
+                <div class="mockup-msg">
+                  <div class="avatar">M</div>
+                  <div class="mockup-msg-text">¿Cuál es el estado de mi pedido #4582?</div>
+                </div>
+                <div class="mockup-msg ai-msg">
+                  <div class="avatar">AI</div>
+                  <div class="mockup-msg-text">Tu pedido está en tránsito. Llegada estimada: mañana</div>
+                </div>
+              </div>
+              <div class="mockup-panel">
+                <div class="mockup-panel-title">📊 Métricas en tiempo real</div>
+                <div class="mockup-stat">
+                  <div class="mockup-stat-value">2,847</div>
+                  <div class="mockup-stat-label">Conversaciones hoy</div>
+                </div>
+                <div class="mockup-stat" style="background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.15)">
+                  <div class="mockup-stat-value" style="color:#10B981">94%</div>
+                  <div class="mockup-stat-label">Resueltos por IA</div>
+                </div>
+                <div class="mockup-panel-title" style="margin-top:14px">⚡ Procesos ejecutados</div>
+                <div class="mockup-flow-item"><span class="status-dot status-green"></span>Orden #4821 creada en SAP</div>
+                <div class="mockup-flow-item"><span class="status-dot status-blue"></span>CRM actualizado — Lead calificado</div>
+                <div class="mockup-flow-item"><span class="status-dot status-green"></span>Factura #INV-003 generada</div>
+                <div class="mockup-flow-item"><span class="status-dot status-yellow"></span>Aprobación pendiente — Mgr.</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-floating-card card-left">
+            <div class="floating-card-label">Tiempo de respuesta</div>
+            <div class="floating-card-value">1.2s</div>
+            <div class="floating-card-sub">↓ 85% vs. sin IA</div>
+          </div>
+          <div class="hero-floating-card card-bottom">
+            <div class="floating-card-label">Procesos automatizados</div>
+            <div class="floating-card-value">12,400+</div>
+            <div class="floating-card-sub">↑ este mes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="social-proof">
+  <div class="container">
+    <div class="social-proof-label">Preparado para integrarse con las plataformas líderes del mercado</div>
+    <div class="logos-grid">
+      <div class="logo-item">
+        <div class="logo-icon" style="background:#0070D2">SF</div>
+        <div class="logo-name">Salesforce</div>
+      </div>
+      <div class="logo-item">
+        <div class="logo-icon" style="background:#0FAAFF">SAP</div>
+        <div class="logo-name">SAP</div>
+      </div>
+      <div class="logo-item">
+        <div class="logo-icon" style="background:#CC0000">Or</div>
+        <div class="logo-name">Oracle</div>
+      </div>
+      <!-- LOGO META: Reemplazar con logo oficial de WhatsApp → meta-logos/whatsapp.svg -->
+      <div class="logo-item">
+        <div class="logo-icon" style="background:#25D366;display:flex;align-items:center;justify-content:center">
+          <img src="meta-logos/whatsapp.svg" alt="WhatsApp" width="26" height="26" style="object-fit:contain" onerror="this.outerHTML='<span style=\'color:#fff;font-weight:800;font-size:.875rem\'>WA</span>'">
+        </div>
+        <div class="logo-name">WhatsApp</div>
+      </div>
+      <div class="logo-item">
+        <div class="logo-icon" style="background:#0078D4">Ms</div>
+        <div class="logo-name">Microsoft</div>
+      </div>
+      <div class="logo-item">
+        <div class="logo-icon" style="background:#4285F4">G</div>
+        <div class="logo-name">Google</div>
+      </div>
+      <div class="logo-item">
+        <div class="logo-icon" style="background:#F14F21">Zo</div>
+        <div class="logo-name">Zoho</div>
+      </div>
+      <div class="logo-item">
+        <div class="logo-icon" style="background:#C8202E">ME</div>
+        <div class="logo-name">ManageEngine</div>
+      </div>
+      <div class="logo-item">
+        <div class="logo-icon" style="background:#334155;font-size:.7rem">&lt;/&gt;</div>
+        <div class="logo-name">Desarrollo In House</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY OCTOPUS -->
+<section class="why-section section" id="soluciones">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><span class="dot"></span>¿Por qué Octopus?</div>
+      <h2>Una plataforma.<br>Infinitas posibilidades.</h2>
+      <p>Diseñada para empresas que necesitan más que un chatbot — necesitan una plataforma de operaciones impulsada por IA.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon">🌐</div>
+        <h3>Omnicanal</h3>
+        <p>Conecta todos tus canales de comunicación — WhatsApp, email, web chat, voz y más — en una única vista unificada para tus agentes.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon">🤖</div>
+        <h3>Agentes IA</h3>
+        <p>Automatiza atención al cliente, ventas y procesos operativos con agentes de IA que entienden el contexto y actúan en tiempo real.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-3">
+        <div class="why-icon">🔗</div>
+        <h3>Integración Empresarial</h3>
+        <p>Conecta directamente con SAP, Oracle, Salesforce, Zoho y cualquier sistema interno a través de APIs robustas y conectores nativos.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-4">
+        <div class="why-icon">⚡</div>
+        <h3>Automatización Inteligente</h3>
+        <p>Reduce tareas manuales, acelera tiempos de respuesta y ejecuta procesos complejos de negocio de forma completamente automatizada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONVERSATIONS → ACTIONS FLOW -->
+<section class="flow-section" id="plataforma">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><span class="dot"></span>Diferenciador Central</div>
+      <h2>Conversaciones que <span class="gradient-text">generan acciones</span></h2>
+      <p>Cada mensaje recibido puede desencadenar automáticamente procesos empresariales complejos — sin intervención humana.</p>
+    </div>
+    <div class="flow-branch-visual reveal">
+      <!-- Step 1: Cliente -->
+      <div class="flow-node">
+        <div class="flow-icon">📱</div>
+        <div class="flow-label">Cliente</div>
+        <div class="flow-sub">WhatsApp / Web</div>
+      </div>
+
+      <!-- Arrow → Octopus -->
+      <div class="flow-arrow">→</div>
+
+      <!-- Step 2: Octopus (central) -->
+      <div class="flow-node central">
+        <img src="logo.png" alt="Octopus" style="width:40px;height:40px;object-fit:contain;margin:0 auto 8px">
+        <div class="flow-label">Octopus AI</div>
+        <div class="flow-sub">Entiende intención</div>
+      </div>
+
+      <!-- Fork: Octopus → ERP y CRM (dos ramas) -->
+      <div class="fbv-fork">
+        <div class="fbv-branch">
+          <div class="fbv-branch-arrow">↗</div>
+          <div class="flow-node">
+            <div class="flow-icon">🏭</div>
+            <div class="flow-label">ERP</div>
+            <div class="flow-sub">SAP / Oracle</div>
+          </div>
+          <div class="fbv-branch-arrow">↘</div>
+        </div>
+        <div class="fbv-branch">
+          <div class="fbv-branch-arrow">↘</div>
+          <div class="flow-node">
+            <div class="flow-icon">👥</div>
+            <div class="flow-label">CRM</div>
+            <div class="flow-sub">Salesforce / Zoho</div>
+          </div>
+          <div class="fbv-branch-arrow">↗</div>
+        </div>
+      </div>
+
+      <!-- Step 5: Resultado (convergen las dos ramas) -->
+      <div class="flow-node">
+        <div class="flow-icon">✅</div>
+        <div class="flow-label">Resultado</div>
+        <div class="flow-sub">Acción ejecutada</div>
+      </div>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step reveal reveal-delay-1">
+        <div class="flow-step-num">01</div>
+        <h4>Recepción del mensaje</h4>
+        <p>Octopus recibe el mensaje del cliente por cualquier canal y analiza la intención usando modelos de IA avanzados.</p>
+      </div>
+      <div class="flow-step reveal reveal-delay-2">
+        <div class="flow-step-num">02</div>
+        <h4>Consulta a sistemas</h4>
+        <p>Consulta automáticamente el ERP y CRM para obtener datos en tiempo real: inventario, historial, estado de pedidos.</p>
+      </div>
+      <div class="flow-step reveal reveal-delay-3">
+        <div class="flow-step-num">03</div>
+        <h4>Ejecución del proceso</h4>
+        <p>Ejecuta el proceso de negocio: crea cotizaciones, órdenes de venta, tickets, aprobaciones o seguimientos automáticos.</p>
+      </div>
+      <div class="flow-step reveal reveal-delay-4">
+        <div class="flow-step-num">04</div>
+        <h4>Respuesta y métricas</h4>
+        <p>Responde automáticamente al cliente, actualiza todos los sistemas involucrados y genera métricas de operación.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT YOUR ENTIRE BUSINESS -->
+<section class="connect-section" id="integraciones">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><span class="dot"></span>Exclusivo de Octopus</div>
+      <h2>Conecta tu <span class="gradient-text">negocio completo</span></h2>
+      <p>Desde la primera conversación hasta el cobro y el análisis de datos — Octopus orquesta todo el flujo de negocio en una sola plataforma.</p>
+    </div>
+    <div class="connect-hub-flow reveal">
+      <!-- Columna izquierda: canales de entrada -->
+      <div class="chf-col">
+        <div class="chf-col-title">Canales de entrada</div>
+        <!-- LOGO META: Reemplazar con logo oficial de WhatsApp → meta-logos/whatsapp.svg -->
+        <div class="connect-node">
+          <div class="cn-icon">
+            <span class="meta-logo-ph">
+              <img src="logos/whatsapp.svg" alt="WhatsApp" width="24" height="24" style="object-fit:contain" onerror="this.outerHTML='📱'">
+            </span>
+          </div>
+          <div class="cn-label">WhatsApp</div>
+          <div class="cn-sub">Mensajería</div>
+        </div>
+        <div class="connect-node">
+          <div class="cn-icon">📧</div>
+          <div class="cn-label">Email</div>
+          <div class="cn-sub">SMTP / API</div>
+        </div>
+        <div class="connect-node">
+          <div class="cn-icon">💻</div>
+          <div class="cn-label">Web Chat</div>
+          <div class="cn-sub">Widget embebible</div>
+        </div>
+        <div class="connect-node">
+          <div class="cn-icon">🎙️</div>
+          <div class="cn-label">Voice AI</div>
+          <div class="cn-sub">Llamadas</div>
+        </div>
+      </div>
+
+      <!-- Flecha entrada -->
+      <div class="chf-arrow-h">→</div>
+
+      <!-- Centro: OCTOPUS hub -->
+      <div class="connect-node hub" style="padding:32px 28px;min-width:160px">
+        <img src="logo-dark.png" alt="Octopus" style="width:42px;height:42px;object-fit:contain;margin:0 auto 8px">
+        <div class="cn-label" style="font-size:1.0625rem">OCTOPUS</div>
+        <div class="cn-sub" style="color:rgba(255,255,255,.5)">Centro de orquestación</div>
+      </div>
+
+      <!-- Flecha salida -->
+      <div class="chf-arrow-h">→</div>
+
+      <!-- Columna derecha: sistemas empresariales -->
+      <div class="chf-col">
+        <div class="chf-col-title">Sistemas empresariales</div>
+        <div class="connect-node">
+          <div class="cn-icon">🏭</div>
+          <div class="cn-label">SAP / ERP</div>
+          <div class="cn-sub">Órdenes & inventario</div>
+        </div>
+        <div class="connect-node">
+          <div class="cn-icon">👥</div>
+          <div class="cn-label">CRM</div>
+          <div class="cn-sub">Clientes & leads</div>
+        </div>
+        <div class="connect-node">
+          <div class="cn-icon">🧾</div>
+          <div class="cn-label">Facturación</div>
+          <div class="cn-sub">Facturas & cobros</div>
+        </div>
+        <div class="connect-node">
+          <div class="cn-icon">💳</div>
+          <div class="cn-label">Cobro</div>
+          <div class="cn-sub">Pagos & cobranza</div>
+        </div>
+        <div class="connect-node">
+          <div class="cn-icon">📊</div>
+          <div class="cn-label">Business Intelligence</div>
+          <div class="cn-sub">Analytics & reportes</div>
+        </div>
+      </div>
+    </div>
+    <div class="connect-desc reveal">
+      <div class="connect-desc-item">
+        <div class="connect-desc-icon">🔄</div>
+        <h4>End-to-End Automation</h4>
+        <p>Desde el primer mensaje hasta el cierre del ciclo — sin intervención manual en ningún punto del proceso.</p>
+      </div>
+      <div class="connect-desc-item">
+        <div class="connect-desc-icon">⚡</div>
+        <h4>Tiempo Real</h4>
+        <p>Todos los sistemas se actualizan de forma sincronizada en tiempo real. Sin datos duplicados ni retrasos.</p>
+      </div>
+      <div class="connect-desc-item">
+        <div class="connect-desc-icon">🧠</div>
+        <h4>Inteligencia Contextual</h4>
+        <p>Octopus entiende el contexto completo de cada cliente para tomar decisiones inteligentes en cada paso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHANNELS -->
+<section class="channels-section section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><span class="dot"></span>Canales</div>
+      <h2>Todos tus canales,<br>una sola plataforma</h2>
+      <p>Gestiona todas las conversaciones desde un único workspace unificado, sin importar el canal de origen.</p>
+    </div>
+    <div class="channels-grid">
+      <div class="channel-card reveal reveal-delay-1">
+        <div class="channel-icon">
+          <span class="meta-logo-ph">
+            <img src="logos/whatsapp.svg" alt="WhatsApp" width="40" height="40" style="object-fit:contain" onerror="this.outerHTML='💬'">
+          </span>
+        </div>
+        <h4>WhatsApp</h4>
+        <p>Tech Provider Oficial de Meta</p>
+        <div class="channel-badge">Más popular</div>
+      </div>
+      <div class="channel-card reveal reveal-delay-2">
+        <div class="channel-icon">
+          <span class="meta-logo-ph">
+            <img src="logos/facebook.png" alt="Facebook" width="40" height="40" style="object-fit:contain" onerror="this.outerHTML='📘'">
+          </span>
+        </div>
+        <h4>Facebook</h4>
+        <p>Messenger & páginas</p>
+      </div>
+      <div class="channel-card reveal reveal-delay-3">
+        <div class="channel-icon">
+          <span class="meta-logo-ph">
+            <img src="logos/instagram.svg" alt="Instagram" width="40" height="40" style="object-fit:contain" onerror="this.outerHTML='📷'">
+          </span>
+        </div>
+        <h4>Instagram</h4>
+        <p>DMs & comentarios</p>
+      </div>
+      <div class="channel-card reveal reveal-delay-4">
+        <div class="channel-icon">✈️</div>
+        <h4>Telegram</h4>
+        <p>Bot & canales</p>
+      </div>
+      <div class="channel-card reveal reveal-delay-1">
+        <div class="channel-icon">📧</div>
+        <h4>Email</h4>
+        <p>SMTP / IMAP / API</p>
+      </div>
+      <div class="channel-card reveal reveal-delay-2">
+        <div class="channel-icon">💻</div>
+        <h4>Web Chat</h4>
+        <p>Widget embebible</p>
+      </div>
+      <div class="channel-card reveal reveal-delay-3">
+        <div class="channel-icon">🎙️</div>
+        <h4>Voice AI</h4>
+        <p>Llamadas con IA</p>
+        <div class="channel-badge">Nuevo</div>
+      </div>
+      <div class="channel-card reveal reveal-delay-4">
+        <div class="channel-icon">📱</div>
+        <h4>SMS</h4>
+        <p>Mensajes de texto</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS ARCHITECTURE -->
+<section class="integrations-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><span class="dot"></span>Integraciones Empresariales</div>
+      <h2>Octopus es el <span class="gradient-text">centro</span><br>de tu ecosistema</h2>
+      <p>Conecta con los sistemas que ya usas. Sin migraciones, sin disrupciones, sin re-entrenar a tu equipo.</p>
+    </div>
+    <!-- Meta Verified Tech Provider strip -->
+    <div class="meta-partner-strip reveal">
+      <div class="mps-left">
+        <div class="mps-platform">
+          <div class="mps-platform-logo">
+            <img src="logos/meta.svg" alt="Meta" width="40" height="40" style="object-fit:contain" onerror="this.style.display='none'">
+          </div>
+        </div>
+        <div class="mps-text">
+          <h4>Meta Verified Tech Provider</h4>
+          <p>Alphnology está verificado por Meta como proveedor de tecnología oficial para WhatsApp Business API — acceso directo a la infraestructura de Meta para mensajería a escala empresarial.</p>
+          <div class="mps-verified">✓ Verificado por Meta</div>
+        </div>
+      </div>
+      <div class="mps-platforms">
+        <div class="mps-platform">
+          <div class="mps-platform-logo">
+            <img src="logos/whatsapp.svg" alt="WhatsApp" width="40" height="40" style="object-fit:contain" onerror="this.style.display='none'">
+          </div>
+          WhatsApp
+        </div>
+        <div class="mps-platform">
+          <div class="mps-platform-logo">
+            <img src="logos/facebook.png" alt="Facebook" width="40" height="40" style="object-fit:contain" onerror="this.style.display='none'">
+          </div>
+          Facebook
+        </div>
+        <div class="mps-platform">
+          <div class="mps-platform-logo">
+            <img src="logos/instagram.svg" alt="Instagram" width="40" height="40" style="object-fit:contain" onerror="this.style.display='none'">
+          </div>
+          Instagram
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-visual reveal">
+      <div class="arch-row">
+        <!-- LOGO META: Reemplazar con logo oficial de WhatsApp → meta-logos/whatsapp.svg -->
+        <div class="arch-node"><span class="arch-node-icon">📱</span><span class="arch-node-text">WhatsApp Business</span></div>
+        <div class="arch-node"><span class="arch-node-icon">📧</span><span class="arch-node-text">Email / Gmail</span></div>
+        <div class="arch-node"><span class="arch-node-icon">💻</span><span class="arch-node-text">Web Chat</span></div>
+        <div class="arch-node"><span class="arch-node-icon">🎙️</span><span class="arch-node-text">Voice AI</span></div>
+        <div class="arch-node"><span class="arch-node-icon">✈️</span><span class="arch-node-text">Telegram</span></div>
+      </div>
+      <div class="arch-connector"><div class="arch-connector-line"></div></div>
+      <div class="arch-center">
+        <img src="logo.png" alt="Octopus">
+        <div class="arch-center-title">OCTOPUS</div>
+        <div class="arch-center-sub">AI Orchestration Engine</div>
+      </div>
+      <div class="arch-connector"><div class="arch-connector-line"></div></div>
+      <div class="arch-row">
+        <div class="arch-node"><span class="arch-node-icon">🏭</span><span class="arch-node-text">SAP Business One</span></div>
+        <div class="arch-node"><span class="arch-node-icon">☁️</span><span class="arch-node-text">Salesforce</span></div>
+        <div class="arch-node"><span class="arch-node-icon">🔶</span><span class="arch-node-text">Oracle</span></div>
+        <div class="arch-node"><span class="arch-node-icon">📊</span><span class="arch-node-text">Zoho CRM</span></div>
+        <div class="arch-node"><span class="arch-node-icon">🔌</span><span class="arch-node-text">REST APIs</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OMNICHANNEL PLATFORM -->
+<section class="omni-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><span class="dot"></span>Plataforma Omnicanal</div>
+      <h2>Todas las conversaciones,<br><span class="gradient-text">una sola bandeja</span></h2>
+      <p>Cada canal converge en un inbox unificado. Bot, IA o agente humano — siempre coordinados, siempre en contexto.</p>
+    </div>
+    <div class="omni-grid reveal">
+
+      <!-- LEFT: Channels funnel -->
+      <div class="omni-channels">
+        <div class="channel-source">
+          <span class="channel-source-icon">
+            <span class="meta-logo-ph">
+              <img src="logos/whatsapp.svg" alt="WhatsApp" width="20" height="20" style="object-fit:contain" onerror="this.outerHTML='💬'">
+            </span>
+          </span>
+          <div class="channel-source-info">
+            <div class="channel-source-name">WhatsApp Business</div>
+            <div class="channel-source-vol">1,204 mensajes hoy</div>
+          </div>
+          <span class="channel-live-dot"></span>
+        </div>
+        <div class="channel-source">
+          <span class="channel-source-icon">
+            <span class="meta-logo-ph">
+              <img src="logos/instagram.svg" alt="Instagram" width="20" height="20" style="object-fit:contain" onerror="this.outerHTML='📷'">
+            </span>
+          </span>
+          <div class="channel-source-info">
+            <div class="channel-source-name">Instagram DM</div>
+            <div class="channel-source-vol">387 mensajes hoy</div>
+          </div>
+          <span class="channel-live-dot"></span>
+        </div>
+        <div class="channel-source">
+          <span class="channel-source-icon">
+            <span class="meta-logo-ph">
+              <img src="logos/facebook.png" alt="Facebook" width="20" height="20" style="object-fit:contain" onerror="this.outerHTML='📘'">
+            </span>
+          </span>
+          <div class="channel-source-info">
+            <div class="channel-source-name">Facebook Messenger</div>
+            <div class="channel-source-vol">219 mensajes hoy</div>
+          </div>
+          <span class="channel-live-dot"></span>
+        </div>
+        <div class="channel-source">
+          <span class="channel-source-icon">💻</span>
+          <div class="channel-source-info">
+            <div class="channel-source-name">Web Chat</div>
+            <div class="channel-source-vol">541 sesiones hoy</div>
+          </div>
+          <span class="channel-live-dot"></span>
+        </div>
+        <div class="channel-source">
+          <span class="channel-source-icon">📧</span>
+          <div class="channel-source-info">
+            <div class="channel-source-name">Email</div>
+            <div class="channel-source-vol">176 tickets hoy</div>
+          </div>
+          <span class="channel-live-dot"></span>
+        </div>
+        <div class="channel-source">
+          <span class="channel-source-icon">🎙️</span>
+          <div class="channel-source-info">
+            <div class="channel-source-name">Voice AI</div>
+            <div class="channel-source-vol">94 llamadas hoy</div>
+          </div>
+          <span class="channel-live-dot"></span>
+        </div>
+        <div class="omni-funnel-arrow">↓ &nbsp; Todo converge &nbsp; ↓</div>
+        <div class="omni-funnel-label">
+          <img src="logo.png" alt="Octopus" style="width:28px;height:28px;object-fit:contain">
+          Octopus Omnichannel Inbox
+        </div>
+      </div>
+
+      <!-- RIGHT: Inbox mockup -->
+      <div class="omni-inbox-mockup">
+        <div class="inbox-topbar">
+          <div class="inbox-topbar-dots">
+            <div class="inbox-topbar-dot" style="background:#FF5F57"></div>
+            <div class="inbox-topbar-dot" style="background:#FEBC2E"></div>
+            <div class="inbox-topbar-dot" style="background:#28C840"></div>
+          </div>
+          <div class="inbox-topbar-title">Octopus — Inbox unificado</div>
+        </div>
+        <div class="inbox-body">
+          <!-- Conversation list -->
+          <div class="inbox-list">
+            <div class="inbox-item active">
+              <div class="inbox-item-header">
+                <span class="inbox-item-name">💬 María G.</span>
+                <span class="inbox-item-time">ahora</span>
+              </div>
+              <div class="inbox-item-preview">¿Cuándo llega mi pedido?</div>
+              <span class="inbox-item-badge badge-bot">🤖 Bot</span>
+            </div>
+            <div class="inbox-item">
+              <div class="inbox-item-header">
+                <span class="inbox-item-name">📷 Carlos R.</span>
+                <span class="inbox-item-time">2 min</span>
+              </div>
+              <div class="inbox-item-preview">Quiero una cotización</div>
+              <span class="inbox-item-badge badge-ai">✨ IA</span>
+            </div>
+            <div class="inbox-item">
+              <div class="inbox-item-header">
+                <span class="inbox-item-name">💻 Ana P.</span>
+                <span class="inbox-item-time">5 min</span>
+              </div>
+              <div class="inbox-item-preview">Necesito hablar con alguien</div>
+              <span class="inbox-item-badge badge-human">👤 Agente</span>
+            </div>
+            <div class="inbox-item">
+              <div class="inbox-item-header">
+                <span class="inbox-item-name">📧 Luis M.</span>
+                <span class="inbox-item-time">8 min</span>
+              </div>
+              <div class="inbox-item-preview">Problema con factura</div>
+              <span class="inbox-item-badge badge-ai">✨ IA</span>
+            </div>
+          </div>
+          <!-- Active chat -->
+          <div class="inbox-chat">
+            <div class="inbox-chat-header">
+              <span class="inbox-chat-name">💬 María G. — WhatsApp</span>
+              <span class="inbox-chat-agent-tag tag-human">👤 Laura (Agente)</span>
+            </div>
+            <div class="chat-bubble incoming">
+              <div class="chat-bubble-text">Hola, ¿cuándo llega mi pedido #4821?</div>
+            </div>
+            <div class="chat-bubble outgoing outgoing-bot">
+              <div class="chat-bubble-sender">🤖 Bot</div>
+              <div class="chat-bubble-text">Consultando tu pedido… Un momento por favor.</div>
+            </div>
+            <div class="chat-bubble outgoing outgoing-ai">
+              <div class="chat-bubble-sender">✨ Agente IA</div>
+              <div class="chat-bubble-text">Tu pedido #4821 está en camino. Llegada estimada: mañana antes de las 6pm. ¿Algo más?</div>
+            </div>
+            <div class="chat-bubble incoming">
+              <div class="chat-bubble-text">Sí, necesito cambiar la dirección de entrega urgente.</div>
+            </div>
+            <div class="escalation-notice">⚡ IA escalando a agente humano — cambio de dirección requiere verificación</div>
+            <div class="chat-bubble outgoing outgoing-human">
+              <div class="chat-bubble-sender">👤 Laura</div>
+              <div class="chat-bubble-text">Hola María, soy Laura. Con gusto te ayudo a actualizar la dirección ahora mismo.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- THREE PILLARS -->
+<section class="three-pillars-section section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><span class="dot"></span>Lo mejor de tres mundos</div>
+      <h2>Bot <span class="gradient-text">+</span> IA <span class="gradient-text">+</span> Humano</h2>
+      <p>Tres capas de inteligencia que trabajan juntas — y se escalan automáticamente cuando el caso lo requiere.</p>
+    </div>
+    <!-- Callout: juntos Y 100% independientes -->
+    <div class="independence-callout reveal">
+      <div class="independence-callout-inner">
+        <div class="ic-icon">💡</div>
+        <div class="ic-body">
+          <h4>Trabajan juntos — o de forma 100% independiente</h4>
+          <p>Los tres mundos están diseñados para escalar automáticamente entre sí. Pero cada uno también puede operar de forma completamente independiente: el cliente elige la combinación que más se adapta a su negocio.</p>
+          <div class="ic-tags">
+            <span class="ic-tag ic-tag-bot">⚙️ Solo Bot</span>
+            <span class="ic-tag ic-tag-ai">🧠 Solo IA</span>
+            <span class="ic-tag ic-tag-human">👤 Solo Agentes</span>
+            <span class="ic-tag ic-tag-all">⚡ Los tres juntos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillars-grid">
+      <!-- Bot Programado -->
+      <div class="pillar-card bot-card reveal reveal-delay-1">
+        <span class="pillar-tag bot-tag">Nivel 1</span>
+        <span class="pillar-icon">⚙️</span>
+        <h3>Bot Programado</h3>
+        <p class="pillar-desc">Flujos de reglas, menús interactivos y respuestas automáticas predefinidas. Rápido, predecible y sin errores.</p>
+        <div class="pillar-list">
+          <div class="pillar-item"><span class="pillar-bullet bot-bullet"></span>Menús y árboles de decisión</div>
+          <div class="pillar-item"><span class="pillar-bullet bot-bullet"></span>Respuestas rápidas y botones</div>
+          <div class="pillar-item"><span class="pillar-bullet bot-bullet"></span>Consultas de estado e info</div>
+          <div class="pillar-item"><span class="pillar-bullet bot-bullet"></span>24/7 sin costo operativo</div>
+          <div class="pillar-item"><span class="pillar-bullet bot-bullet"></span>100% predecible y auditable</div>
+        </div>
+      </div>
+      <!-- Agente IA -->
+      <div class="pillar-card ai-card reveal reveal-delay-2">
+        <span class="pillar-tag ai-tag">Nivel 2</span>
+        <span class="pillar-icon">🧠</span>
+        <h3>Agente IA</h3>
+        <p class="pillar-desc">Entiende lenguaje natural, consulta sistemas en tiempo real y ejecuta procesos complejos de negocio.</p>
+        <div class="pillar-list">
+          <div class="pillar-item"><span class="pillar-bullet ai-bullet"></span>Comprensión de lenguaje natural</div>
+          <div class="pillar-item"><span class="pillar-bullet ai-bullet"></span>Integración con ERP y CRM</div>
+          <div class="pillar-item"><span class="pillar-bullet ai-bullet"></span>Generación de cotizaciones y órdenes</div>
+          <div class="pillar-item"><span class="pillar-bullet ai-bullet"></span>Respuesta en milisegundos</div>
+          <div class="pillar-item"><span class="pillar-bullet ai-bullet"></span>Aprende del contexto</div>
+        </div>
+      </div>
+      <!-- Agente Humano -->
+      <div class="pillar-card human-card reveal reveal-delay-3">
+        <span class="pillar-tag human-tag">Nivel 3</span>
+        <span class="pillar-icon">👤</span>
+        <h3>Agente Humano</h3>
+        <p class="pillar-desc">Empatía real, poder de decisión y manejo de casos complejos o sensibles que requieren intervención humana.</p>
+        <div class="pillar-list">
+          <div class="pillar-item"><span class="pillar-bullet human-bullet"></span>Empatía y relación con el cliente</div>
+          <div class="pillar-item"><span class="pillar-bullet human-bullet"></span>Negociación y excepciones</div>
+          <div class="pillar-item"><span class="pillar-bullet human-bullet"></span>Decisiones estratégicas</div>
+          <div class="pillar-item"><span class="pillar-bullet human-bullet"></span>Ve todo el historial en pantalla</div>
+          <div class="pillar-item"><span class="pillar-bullet human-bullet"></span>Asistido por IA en tiempo real</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Escalation strip -->
+    <div class="escalation-strip reveal">
+      <div class="escalation-title">Escalamiento automático inteligente</div>
+      <div class="escalation-flow">
+        <div class="esc-node active-node">
+          <span class="esc-icon">⚙️</span>
+          <div class="esc-label">Bot</div>
+          <div class="esc-sub">Responde automáticamente</div>
+        </div>
+        <div class="esc-arrow-wrap">
+          <span class="esc-arrow-icon">→</span>
+          <span class="esc-trigger">No puede resolver</span>
+        </div>
+        <div class="esc-node active-node">
+          <span class="esc-icon">🧠</span>
+          <div class="esc-label">Agente IA</div>
+          <div class="esc-sub">Analiza y ejecuta</div>
+        </div>
+        <div class="esc-arrow-wrap">
+          <span class="esc-arrow-icon">→</span>
+          <span class="esc-trigger">Caso sensible / complejo</span>
+        </div>
+        <div class="esc-node">
+          <span class="esc-icon">👤</span>
+          <div class="esc-label">Agente Humano</div>
+          <div class="esc-sub">Con historial completo</div>
+        </div>
+        <div class="esc-arrow-wrap">
+          <span class="esc-arrow-icon">→</span>
+          <span class="esc-trigger">Siempre</span>
+        </div>
+        <div class="esc-node" style="border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.07)">
+          <span class="esc-icon">✅</span>
+          <div class="esc-label" style="color:#10B981">Resuelto</div>
+          <div class="esc-sub">Cliente satisfecho</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results row -->
+    <div class="result-strip reveal" style="margin-top:32px;padding-top:32px;border-top:1px solid var(--border)">
+      <div class="result-item">
+        <h4>Mayor Productividad</h4>
+        <p>Agentes humanos enfocados en lo que importa, IA manejando el volumen.</p>
+      </div>
+      <div class="result-item">
+        <h4>Menor Costo Operativo</h4>
+        <p>Reduce hasta 60% los costos de atención con automatización inteligente.</p>
+      </div>
+      <div class="result-item">
+        <h4>Mejor Experiencia</h4>
+        <p>Respuesta inmediata + toque humano cuando el cliente más lo necesita.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="usecases-section section" id="casos">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><span class="dot"></span>Casos de Uso</div>
+      <h2>Diseñado para <span class="gradient-text">cada industria</span></h2>
+      <p>Octopus se adapta a las necesidades específicas de tu industria con flujos pre-construidos y mejores prácticas.</p>
+    </div>
+    <div class="usecases-grid">
+      <div class="usecase-card reveal reveal-delay-1"><div class="usecase-icon">🎧</div><h4>Atención al Cliente</h4></div>
+      <div class="usecase-card reveal reveal-delay-2"><div class="usecase-icon">💼</div><h4>Ventas</h4></div>
+      <div class="usecase-card reveal reveal-delay-3"><div class="usecase-icon">💰</div><h4>Cobranza</h4></div>
+      <div class="usecase-card reveal reveal-delay-4"><div class="usecase-icon">🛠️</div><h4>Mesa de Ayuda</h4></div>
+      <div class="usecase-card reveal reveal-delay-1"><div class="usecase-icon">🏨</div><h4>Hotelería</h4></div>
+      <div class="usecase-card reveal reveal-delay-2"><div class="usecase-icon">🛍️</div><h4>Retail</h4></div>
+      <div class="usecase-card reveal reveal-delay-3"><div class="usecase-icon">⚡</div><h4>Energía</h4></div>
+      <div class="usecase-card reveal reveal-delay-4"><div class="usecase-icon">🏛️</div><h4>Gobierno</h4></div>
+      <div class="usecase-card reveal reveal-delay-1"><div class="usecase-icon">🏥</div><h4>Salud</h4></div>
+      <div class="usecase-card reveal reveal-delay-2"><div class="usecase-icon">🎓</div><h4>Educación</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="metrics-section">
+  <div class="container">
+    <div class="metrics-grid">
+      <div class="metric-item reveal">
+        <div class="metric-value"><span class="counter" data-target="85">0</span><span class="metric-suffix">%</span></div>
+        <div class="metric-label">Menor tiempo de respuesta</div>
+      </div>
+      <div class="metric-item reveal reveal-delay-1">
+        <div class="metric-value"><span class="counter" data-target="60">0</span><span class="metric-suffix">%</span></div>
+        <div class="metric-label">Menor carga operativa</div>
+      </div>
+      <div class="metric-item reveal reveal-delay-2">
+        <div class="metric-value">24<span class="metric-suffix">/7</span></div>
+        <div class="metric-label">Disponibilidad continua</div>
+      </div>
+      <div class="metric-item reveal reveal-delay-3">
+        <div class="metric-value"><span class="counter" data-target="40">0</span><span class="metric-suffix">%</span></div>
+        <div class="metric-label">Mayor productividad</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products-section section" id="productos">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><span class="dot"></span>Plataforma Modular</div>
+      <h2>Todo lo que necesitas,<br><span class="gradient-text">en un solo lugar</span></h2>
+      <p>Una suite completa de productos diseñados para trabajar juntos y potenciar cada aspecto de tus operaciones.</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-icon">📥</div>
+        <h3>Omnichannel Inbox</h3>
+        <p>Unified inbox para gestionar todas las conversaciones de todos los canales en una sola interfaz intuitiva.</p>
+        <span class="product-link">Conocer más →</span>
+      </div>
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-icon">🤖</div>
+        <h3>AI Agents</h3>
+        <p>Agentes de IA configurables que entienden el contexto, consultan sistemas y ejecutan procesos automáticamente.</p>
+        <span class="product-link">Conocer más →</span>
+      </div>
+      <div class="product-card reveal reveal-delay-3">
+        <div class="product-icon">🎙️</div>
+        <h3>Voice AI</h3>
+        <p>Agentes de voz con IA que manejan llamadas entrantes y salientes con naturalidad y precisión.</p>
+        <span class="product-link">Conocer más →</span>
+      </div>
+      <div class="product-card reveal reveal-delay-4">
+        <div class="product-icon">⚙️</div>
+        <h3>Automation Engine</h3>
+        <p>Motor de automatización visual para crear flujos de trabajo complejos sin necesidad de código.</p>
+        <span class="product-link">Conocer más →</span>
+      </div>
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-icon">🔗</div>
+        <h3>Business Integrations</h3>
+        <p>Conectores nativos y bidireccionales con los principales ERP, CRM y plataformas empresariales.</p>
+        <span class="product-link">Conocer más →</span>
+      </div>
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-icon">📊</div>
+        <h3>Analytics</h3>
+        <p>Dashboards en tiempo real, reportes avanzados y alertas configurables para decisiones basadas en datos.</p>
+        <span class="product-link">Conocer más →</span>
+      </div>
+      <div class="product-card reveal reveal-delay-3">
+        <div class="product-icon">📚</div>
+        <h3>Knowledge Base</h3>
+        <p>Base de conocimiento centralizada que alimenta a los agentes IA con información precisa y actualizada.</p>
+        <span class="product-link">Conocer más →</span>
+      </div>
+      <div class="product-card reveal reveal-delay-4">
+        <div class="product-icon">🔌</div>
+        <h3>API Platform</h3>
+        <p>API REST completa y webhooks para integrar Octopus con cualquier sistema o flujo de trabajo personalizado.</p>
+        <span class="product-link">Conocer más →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="security-section section" id="empresa">
+  <div class="container">
+    <div class="security-grid">
+      <div class="reveal">
+        <div class="section-badge"><span class="dot"></span>Seguridad Enterprise</div>
+        <h2>Construido para la<br><span class="gradient-text">empresa moderna</span></h2>
+        <p style="margin:16px 0 24px">Octopus fue diseñado desde el primer día para cumplir con los estándares de seguridad y escalabilidad que las empresas medianas y grandes requieren.</p>
+        <div class="security-badges">
+          <div class="security-badge"><span class="security-badge-icon">🔒</span>SSL/TLS</div>
+          <div class="security-badge"><span class="security-badge-icon">🛡️</span>SOC 2 Ready</div>
+          <div class="security-badge"><span class="security-badge-icon">☁️</span>Multi-Cloud</div>
+          <div class="security-badge"><span class="security-badge-icon">🌐</span>GDPR</div>
+          <div class="security-badge"><span class="security-badge-icon">⚡</span>99.9% SLA</div>
+          <!-- BADGE META OFICIAL: Reemplazar img con badge verificado de brand.meta.com → meta-logos/meta-badge.svg -->
+          <div class="security-badge security-badge-meta">
+            <span class="security-badge-icon">
+              <span class="meta-logo-ph" style="width:18px;height:18px;background:linear-gradient(135deg,#0081FB,#00B2FF);border-radius:4px">
+                <img src="meta-logos/meta.svg" alt="Meta" width="12" height="12" style="filter:brightness(0) invert(1)" onerror="this.style.display='none'">
+              </span>
+            </span>
+            Meta Verified Tech Provider
+          </div>
+        </div>
+      </div>
+      <div class="security-list reveal">
+        <div class="security-item">
+          <div class="security-item-icon">👤</div>
+          <div class="security-item-text">
+            <h4>Roles y Permisos</h4>
+            <p>La plataforma cuenta con dos roles definidos — <strong>Agente</strong> y <strong>Administrador</strong> — con acceso claramente diferenciado para garantizar control y seguridad operativa.</p>
+          </div>
+        </div>
+        <!-- Auditoría Completa: en desarrollo
+        <div class="security-item">
+          <div class="security-item-icon">📋</div>
+          <div class="security-item-text">
+            <h4>Auditoría Completa</h4>
+            <p>Log inmutable de todas las acciones realizadas en la plataforma para cumplimiento y trazabilidad.</p>
+          </div>
+        </div>
+        -->
+        <div class="security-item">
+          <div class="security-item-icon">🏢</div>
+          <div class="security-item-text">
+            <h4>Multi-empresa y Multi-tenant</h4>
+            <p>Soporte nativo para gestionar múltiples empresas, marcas o unidades de negocio desde una sola instancia.</p>
+          </div>
+        </div>
+        <div class="security-item">
+          <div class="security-item-icon">📈</div>
+          <div class="security-item-text">
+            <h4>Alta Disponibilidad</h4>
+            <p>Arquitectura distribuida con failover automático, respaldo continuo y SLA de 99.9% de uptime garantizado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section section" style="display:none">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><span class="dot"></span>Testimonios</div>
+      <h2>Lo que dicen nuestros<br><span class="gradient-text">clientes</span></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"Octopus transformó completamente nuestras operaciones de atención al cliente. Lo que antes tomaba a nuestro equipo horas de trabajo manual, ahora sucede automáticamente en segundos. La integración con SAP fue clave."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">AR</div>
+          <div>
+            <div class="author-name">Ana Rodríguez</div>
+            <div class="author-title">VP Operaciones — Grupo Industrial Monterrey</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"Implementamos Octopus para nuestro equipo de ventas y en 30 días ya estábamos procesando el doble de cotizaciones con el mismo equipo. Los agentes de IA son increíblemente precisos y el cliente ni se da cuenta."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">CM</div>
+          <div>
+            <div class="author-name">Carlos Mendoza</div>
+            <div class="author-title">Director Comercial — RetailMax Latinoamérica</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-3">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"Como responsable de transformación digital, buscaba una plataforma que realmente conectara todos nuestros sistemas. Octopus fue la única solución que lo hizo sin necesidad de un proyecto de integración interminable."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">LP</div>
+          <div>
+            <div class="author-name">Laura Pérez</div>
+            <div class="author-title">CTO — Energía del Pacífico S.A.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section section" id="faq">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><span class="dot"></span>FAQ</div>
+      <h2>Preguntas frecuentes</h2>
+      <p>Todo lo que necesitas saber sobre Octopus.</p>
+    </div>
+    <div class="faq-container">
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Qué es Octopus?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Octopus es una plataforma empresarial de inteligencia artificial que conecta conversaciones, sistemas y procesos de negocio. Permite unificar todos los canales de comunicación — WhatsApp, email, web, voz — y conectarlos con ERP, CRM y sistemas internos para automatizar operaciones completas.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Es compatible con WhatsApp Business API?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Sí. Octopus es <strong>Tech Provider oficial de Meta</strong> para WhatsApp Business API — lo que significa que operamos directamente sobre la infraestructura de Meta para entregar mensajes de forma confiable y a escala. Esto incluye soporte para mensajes de plantilla, botones interactivos, listas, documentos, imágenes y todas las funcionalidades avanzadas de la plataforma. Puedes conocer más sobre qué significa ser Tech Provider en la documentación oficial de Meta: <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/solution-providers/overview#tech-providers" target="_blank" rel="noopener noreferrer" style="color:var(--blue-mid);text-decoration:underline">developers.facebook.com — Tech Providers →</a></div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Puede conectarse con SAP Business One u otros ERP?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Absolutamente. Octopus tiene conectores nativos para SAP Business One, SAP S/4HANA, Oracle ERP, Microsoft Dynamics y otros sistemas empresariales. La integración es bidireccional — Octopus puede consultar y escribir datos en el ERP en tiempo real durante las conversaciones.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Tiene API pública?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Sí. Octopus expone una API REST completa con autenticación OAuth2, webhooks configurables y documentación detallada. Permite integrar Octopus con cualquier sistema o herramienta de tu stack tecnológico.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Puede integrarse con sistemas existentes sin reemplazarlos?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Ese es el modelo de Octopus: no reemplaza tus sistemas existentes, los conecta y potencia. SAP sigue siendo tu ERP, Salesforce sigue siendo tu CRM — Octopus actúa como el orquestador inteligente que los une con tus conversaciones.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Es multiempresa? ¿Soporta múltiples marcas?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Sí. Octopus soporta arquitecturas multi-tenant con completo aislamiento de datos entre empresas o marcas. Ideal para grupos corporativos, franquicias, o empresas con múltiples líneas de negocio.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ¿Cómo funciona la automatización de procesos?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">El Automation Engine de Octopus permite definir flujos de trabajo visuales que se activan por eventos de conversación. Por ejemplo: cuando un cliente solicita una cotización por WhatsApp, el flujo consulta el ERP, genera la cotización, la envía al cliente y actualiza el CRM — todo sin intervención humana.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="contact-section section" id="contacto">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><span class="dot"></span>Contacto</div>
+      <h2>Hablemos de tu <span class="gradient-text">proyecto</span></h2>
+      <p>¿Listo para transformar las operaciones de tu empresa? Cuéntanos tu caso y te preparamos una demo personalizada.</p>
+    </div>
+    <div class="contact-grid">
+      <!-- Info -->
+      <div class="reveal">
+        <h3 style="color:var(--navy);font-size:1.25rem;margin-bottom:10px">Agenda una demo personalizada</h3>
+        <p>Cuéntanos sobre tu empresa y te mostraremos cómo Octopus puede adaptarse a tus necesidades específicas de operación y atención al cliente.</p>
+        <div class="contact-info-list">
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📧</div>
+            <div class="contact-info-text">
+              <h5>Email</h5>
+              <p>info@alphnology.com</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📱</div>
+            <div class="contact-info-text">
+              <h5>WhatsApp</h5>
+              <p>+1 809 215 1611</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">🌎</div>
+            <div class="contact-info-text">
+              <h5>Región</h5>
+              <p>Latinoamérica &amp; Caribe</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Form -->
+      <div class="reveal reveal-delay-2">
+        <div class="contact-form-box">
+          <form id="octopusContactForm" novalidate>
+            <div class="cform-group">
+              <label for="oc-name" class="cform-label">Nombre *</label>
+              <input type="text" id="oc-name" name="name" class="cform-input" placeholder="Tu nombre completo" required>
+            </div>
+            <div class="cform-group">
+              <label for="oc-email" class="cform-label">Email *</label>
+              <input type="email" id="oc-email" name="email" class="cform-input" placeholder="tu@empresa.com" required>
+            </div>
+            <div class="cform-group">
+              <label for="oc-company" class="cform-label">Empresa</label>
+              <input type="text" id="oc-company" name="company" class="cform-input" placeholder="Nombre de tu empresa">
+            </div>
+            <div class="cform-group">
+              <label for="oc-message" class="cform-label">¿En qué podemos ayudarte? *</label>
+              <textarea id="oc-message" name="message" class="cform-input" placeholder="Cuéntanos sobre tu empresa y lo que buscas lograr con Octopus..." rows="4" required></textarea>
+            </div>
+            <!-- Honeypot: oculto para humanos, los bots lo llenan -->
+            <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+              <input type="text" name="website" id="oc-website" tabindex="-1" autocomplete="off">
+            </div>
+            <button type="submit" class="cform-btn" id="oc-submit">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              Enviar mensaje
+            </button>
+            <div class="cform-status" id="oc-status"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="demo">
+  <div class="container">
+    <div class="cta-final-content">
+      <div class="hero-badge" style="display:inline-flex;margin-bottom:24px">
+        <span class="pulse"></span>
+        Empieza hoy
+      </div>
+      <h2>Transforma conversaciones<br>en <span class="gradient-text">resultados.</span></h2>
+      <p>Descubre cómo Octopus puede conectar personas, inteligencia artificial y procesos empresariales en tu organización.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-primary btn-lg">Solicitar Demo Gratuita</a>
+        <a href="#" class="btn btn-secondary btn-lg">Hablar con un Especialista</a>
+      </div>
+      <div class="cta-trust">
+        <div class="cta-trust-item">✓ Sin compromiso</div>
+        <div class="cta-trust-item">✓ Demo personalizada</div>
+        <div class="cta-trust-item">✓ Implementación en días</div>
+        <div class="cta-trust-item">✓ Soporte incluido</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="logo.png" alt="Octopus">
+          <span class="footer-logo-text">OCTOPUS</span>
+        </div>
+        <p class="footer-tagline">The AI Platform for Customer Operations. Conecta conversaciones, sistemas y procesos en una sola plataforma.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-btn" aria-label="Twitter">𝕏</a>
+          <a href="#" class="social-btn" aria-label="YouTube">▶</a>
+          <a href="#" class="social-btn" aria-label="Instagram">📷</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Productos</h5>
+        <div class="footer-links">
+          <a href="#">Omnichannel Inbox</a>
+          <a href="#">AI Agents</a>
+          <a href="#">Voice AI</a>
+          <a href="#">Automation Engine</a>
+          <a href="#">Analytics</a>
+          <a href="#">API Platform</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Soluciones</h5>
+        <div class="footer-links">
+          <a href="#">Atención al Cliente</a>
+          <a href="#">Ventas</a>
+          <a href="#">Cobranza</a>
+          <a href="#">Mesa de Ayuda</a>
+          <a href="#">Retail</a>
+          <a href="#">Salud</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Integraciones</h5>
+        <div class="footer-links">
+          <a href="#">SAP Business One</a>
+          <a href="#">Salesforce</a>
+          <a href="#">Oracle</a>
+          <a href="#">Zoho</a>
+          <a href="#">WhatsApp API</a>
+          <a href="#">Ver todas</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Empresa</h5>
+        <div class="footer-links">
+          <a href="#">Sobre nosotros</a>
+          <a href="#">Blog</a>
+          <a href="#">Casos de éxito</a>
+          <a href="#">Partners</a>
+          <a href="#">Contacto</a>
+          <a href="#">Empleo</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copyright">© <span id="footer-year"></span> Octopus AI Platform. Todos los derechos reservados.</div>
+      <div class="footer-legal">
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+        <a href="#">Cookies</a>
+        <a href="#">Seguridad</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Copyright year
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+// Navbar scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(el => observer.observe(el));
+
+// Counter animation
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const duration = 2000;
+  const step = target / (duration / 16);
+  let current = 0;
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = Math.floor(current);
+    if (current >= target) clearInterval(timer);
+  }, 16);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.counter').forEach(animateCounter);
+      counterObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.metrics-section').forEach(el => counterObserver.observe(el));
+
+// FAQ accordion
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const answer = item.querySelector('.faq-answer');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-answer').style.maxHeight = '0';
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+
+// Mobile menu
+function toggleMenu() {
+  const links = document.querySelector('.nav-links');
+  const login = document.querySelector('.nav-login');
+  const isOpen = links && links.style.display === 'flex';
+  [links, login].forEach(el => {
+    if (el) el.style.display = isOpen ? 'none' : 'flex';
+  });
+}
+
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    const links = document.querySelector('.nav-links');
+    const login = document.querySelector('.nav-login');
+    if (links && links.style.display === 'flex') {
+      links.style.display = 'none';
+      if (login) login.style.display = 'none';
+    }
+  });
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-inner')) {
+    const links = document.querySelector('.nav-links');
+    const login = document.querySelector('.nav-login');
+    if (links && links.style.display === 'flex') {
+      links.style.display = 'none';
+      if (login) login.style.display = 'none';
+    }
+  }
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+
+// Contact Form
+(function() {
+  const form = document.getElementById('octopusContactForm');
+  if (!form) return;
+
+  const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:8080/api/contact'
+    : 'https://contact-api.alphnology.com/api/contact';
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submitBtn = document.getElementById('oc-submit');
+    const status = document.getElementById('oc-status');
+    const originalHTML = submitBtn.innerHTML;
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="cform-spin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="32"><animate attributeName="stroke-dashoffset" values="32;0" dur="1s" repeatCount="indefinite"/></circle></svg></span> Enviando...';
+    status.className = 'cform-status';
+    status.style.display = 'none';
+
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const result = await res.json();
+      if (!res.ok || !result.success) throw new Error(result.message || 'Error');
+      status.className = 'cform-status success';
+      status.textContent = '✓ Mensaje enviado correctamente. Te contactaremos pronto.';
+      form.reset();
+    } catch {
+      status.className = 'cform-status error';
+      status.textContent = 'No se pudo enviar el mensaje. Intenta de nuevo más tarde.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalHTML;
+    }
+  });
+})();
+</script>
+</body>
+</html>
