@@ -1150,7 +1150,7 @@ textarea.cform-input{resize:vertical;min-height:110px;line-height:1.6}
 }
 .mps-platform:hover{background:rgba(255,255,255,.12);border-color:rgba(0,178,255,.45);transform:translateY(-2px);color:#fff}
 .mps-platform-logo{
-  width:40px;height:40px;border-radius:9px;
+  width:40px;height:40px;
   display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
 .mps-platform-logo img{object-fit:contain}
@@ -1490,17 +1490,29 @@ textarea.cform-input{resize:vertical;min-height:110px;line-height:1.6}
           <div class="cn-sub">Mensajería</div>
         </div>
         <div class="connect-node">
-          <div class="cn-icon">📧</div>
+          <div class="cn-icon">
+            <span class="meta-logo-ph">
+              <img src="logos/email.png" alt="Email" width="24" height="24" style="object-fit:contain" onerror="this.outerHTML='📧'">
+            </span>
+          </div>
           <div class="cn-label">Email</div>
           <div class="cn-sub">SMTP / API</div>
         </div>
         <div class="connect-node">
-          <div class="cn-icon">💻</div>
+          <div class="cn-icon">
+            <span class="meta-logo-ph">
+              <img src="logos/web-chat.png" alt="Web Chat" width="24" height="24" style="object-fit:contain" onerror="this.outerHTML='💻'">
+            </span>
+          </div>
           <div class="cn-label">Web Chat</div>
           <div class="cn-sub">Widget embebible</div>
         </div>
         <div class="connect-node">
-          <div class="cn-icon">🎙️</div>
+          <div class="cn-icon">
+            <span class="meta-logo-ph">
+              <img src="logos/ai-voice.png" alt="Voice AI" width="24" height="24" style="object-fit:contain" onerror="this.outerHTML='🎙'">
+            </span>
+          </div>
           <div class="cn-label">Voice AI</div>
           <div class="cn-sub">Llamadas</div>
         </div>
@@ -1607,28 +1619,48 @@ textarea.cform-input{resize:vertical;min-height:110px;line-height:1.6}
         <p>DMs & comentarios</p>
       </div>
       <div class="channel-card reveal reveal-delay-4">
-        <div class="channel-icon">✈️</div>
+        <div class="channel-icon">
+          <span class="meta-logo-ph">
+            <img src="logos/telegram.svg" alt="Telegram" width="40" height="40" style="object-fit:contain" onerror="this.outerHTML='✈️'">
+          </span>
+        </div>
         <h4>Telegram</h4>
         <p>Bot & canales</p>
       </div>
       <div class="channel-card reveal reveal-delay-1">
-        <div class="channel-icon">📧</div>
+        <div class="channel-icon">
+          <span class="meta-logo-ph">
+            <img src="logos/email.png" alt="Email" width="40" height="40" style="object-fit:contain" onerror="this.outerHTML='📧'">
+          </span>
+        </div>
         <h4>Email</h4>
         <p>SMTP / IMAP / API</p>
       </div>
       <div class="channel-card reveal reveal-delay-2">
-        <div class="channel-icon">💻</div>
+        <div class="channel-icon">
+          <span class="meta-logo-ph">
+            <img src="logos/web-chat.png" alt="Web Chat" width="40" height="40" style="object-fit:contain" onerror="this.outerHTML='💻'">
+          </span>
+        </div>
         <h4>Web Chat</h4>
         <p>Widget embebible</p>
       </div>
       <div class="channel-card reveal reveal-delay-3">
-        <div class="channel-icon">🎙️</div>
+        <div class="channel-icon">
+          <span class="meta-logo-ph">
+            <img src="logos/ai-voice.png" alt="Voice AI" width="40" height="40" style="object-fit:contain" onerror="this.outerHTML='🎙️'">
+          </span>
+        </div>
         <h4>Voice AI</h4>
         <p>Llamadas con IA</p>
         <div class="channel-badge">Nuevo</div>
       </div>
       <div class="channel-card reveal reveal-delay-4">
-        <div class="channel-icon">📱</div>
+        <div class="channel-icon">
+          <span class="meta-logo-ph">
+            <img src="logos/sms.png" alt="SMS" width="40" height="40" style="object-fit:contain" onerror="this.outerHTML='📱'">
+          </span>
+        </div>
         <h4>SMS</h4>
         <p>Mensajes de texto</p>
       </div>
@@ -1683,11 +1715,11 @@ textarea.cform-input{resize:vertical;min-height:110px;line-height:1.6}
     <div class="arch-visual reveal">
       <div class="arch-row">
         <!-- LOGO META: Reemplazar con logo oficial de WhatsApp → meta-logos/whatsapp.svg -->
-        <div class="arch-node"><span class="arch-node-icon">📱</span><span class="arch-node-text">WhatsApp Business</span></div>
-        <div class="arch-node"><span class="arch-node-icon">📧</span><span class="arch-node-text">Email / Gmail</span></div>
-        <div class="arch-node"><span class="arch-node-icon">💻</span><span class="arch-node-text">Web Chat</span></div>
-        <div class="arch-node"><span class="arch-node-icon">🎙️</span><span class="arch-node-text">Voice AI</span></div>
-        <div class="arch-node"><span class="arch-node-icon">✈️</span><span class="arch-node-text">Telegram</span></div>
+        <div class="arch-node"><span class="arch-node-icon"><img src="logos/whatsapp.svg" alt="WhatsApp" width="20" height="20" style="object-fit:contain;display:block" onerror="this.outerHTML='📱'"></span><span class="arch-node-text">WhatsApp Business</span></div>
+        <div class="arch-node"><span class="arch-node-icon"><img src="logos/email.png" alt="Email" width="20" height="20" style="object-fit:contain;display:block" onerror="this.outerHTML='📧'"></span><span class="arch-node-text">Email / Gmail</span></div>
+        <div class="arch-node"><span class="arch-node-icon"><img src="logos/web-chat.png" alt="Web Chat" width="20" height="20" style="object-fit:contain;display:block" onerror="this.outerHTML='💻'"></span><span class="arch-node-text">Web Chat</span></div>
+        <div class="arch-node"><span class="arch-node-icon"><img src="logos/ai-voice.png" alt="Voice AI" width="20" height="20" style="object-fit:contain;display:block" onerror="this.outerHTML='🎙️'"></span><span class="arch-node-text">Voice AI</span></div>
+        <div class="arch-node"><span class="arch-node-icon"><img src="logos/telegram.svg" alt="Telegram" width="20" height="20" style="object-fit:contain;display:block" onerror="this.outerHTML='✈️'"></span><span class="arch-node-text">Telegram</span></div>
       </div>
       <div class="arch-connector"><div class="arch-connector-line"></div></div>
       <div class="arch-center">
@@ -1756,7 +1788,11 @@ textarea.cform-input{resize:vertical;min-height:110px;line-height:1.6}
           <span class="channel-live-dot"></span>
         </div>
         <div class="channel-source">
-          <span class="channel-source-icon">💻</span>
+          <span class="channel-source-icon">
+            <span class="meta-logo-ph">
+              <img src="logos/web-chat.png" alt="Web Chat" width="20" height="20" style="object-fit:contain" onerror="this.outerHTML='💻'">
+            </span>
+          </span>
           <div class="channel-source-info">
             <div class="channel-source-name">Web Chat</div>
             <div class="channel-source-vol">541 sesiones hoy</div>
@@ -1764,7 +1800,11 @@ textarea.cform-input{resize:vertical;min-height:110px;line-height:1.6}
           <span class="channel-live-dot"></span>
         </div>
         <div class="channel-source">
-          <span class="channel-source-icon">📧</span>
+          <span class="channel-source-icon">
+            <span class="meta-logo-ph">
+              <img src="logos/email.png" alt="Email" width="20" height="20" style="object-fit:contain" onerror="this.outerHTML='📧'">
+            </span>
+          </span>
           <div class="channel-source-info">
             <div class="channel-source-name">Email</div>
             <div class="channel-source-vol">176 tickets hoy</div>
@@ -1772,7 +1812,11 @@ textarea.cform-input{resize:vertical;min-height:110px;line-height:1.6}
           <span class="channel-live-dot"></span>
         </div>
         <div class="channel-source">
-          <span class="channel-source-icon">🎙️</span>
+          <span class="channel-source-icon">
+            <span class="meta-logo-ph">
+              <img src="logos/ai-voice.png" alt="Voice AI" width="20" height="20" style="object-fit:contain" onerror="this.outerHTML='🎙️'">
+            </span>
+          </span>
           <div class="channel-source-info">
             <div class="channel-source-name">Voice AI</div>
             <div class="channel-source-vol">94 llamadas hoy</div>
@@ -2118,8 +2162,8 @@ textarea.cform-input{resize:vertical;min-height:110px;line-height:1.6}
           <!-- BADGE META OFICIAL: Reemplazar img con badge verificado de brand.meta.com → meta-logos/meta-badge.svg -->
           <div class="security-badge security-badge-meta">
             <span class="security-badge-icon">
-              <span class="meta-logo-ph" style="width:18px;height:18px;background:linear-gradient(135deg,#0081FB,#00B2FF);border-radius:4px">
-                <img src="meta-logos/meta.svg" alt="Meta" width="12" height="12" style="filter:brightness(0) invert(1)" onerror="this.style.display='none'">
+              <span class="meta-logo-ph">
+                <img src="logos/meta.svg" alt="Meta" width="12" height="12" style="filter:brightness(0) invert(1)" onerror="this.style.display='none'">
               </span>
             </span>
             Meta Verified Tech Provider
@@ -2574,7 +2618,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span class="cform-spin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="32"><animate attributeName="stroke-dashoffset" values="32;0" dur="1s" repeatCount="indefinite"/></circle></svg></span> Enviando...';
     status.className = 'cform-status';
-    status.style.display = 'none';
+    status.style.display = '';
 
     const data = Object.fromEntries(new FormData(form).entries());
 
